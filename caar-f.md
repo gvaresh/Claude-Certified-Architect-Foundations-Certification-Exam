@@ -136,19 +136,6 @@ C. Single comprehensive prompt — include all instructions in one prompt and le
 
 D. Prompt chaining — break the review into sequential steps where each aspect (style, security, documentation) is analyzed separately and combined in a final synthesis step. 
 
-Question 11 of 60 
-
-An engineer used Claude Code yesterday to investigate authentication flows in a legacy monolith, building up significant context over a 2-hour session. Today she wants to continue that specific investigation. She’s worked on three other codebases since then and knows the session isn’t the most recent “auth-deep-dive”. How should she resume? 
-
-A. Use --resume auth-deep-dive to load that specific session by name. 
-
-B. Use --session-id with the UUID from yesterday’s session transcript file. 
-
-C. Start fresh and re-read the same files. 
-
-D. Use --continue to pick up where the most recent conversation left off. 
-
-⸻ 
 
 Question 11 
 
