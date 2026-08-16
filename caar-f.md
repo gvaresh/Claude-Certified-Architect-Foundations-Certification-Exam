@@ -609,7 +609,7 @@ The automated review pipeline generates an average of 18 findings per PR. Develo
 
 Options: 
 
-A. Create a REVIEW.md at the repository root with skip rules for CI-enforced checks and generated files, and require findings to cite specific evidence of incorrect behavior. 
+A. Create a REVIEW.md at the repository root with skip rules for CI-enforced checks and generated files, and require findings to cite specific evidence of incorrect behavior. ✅ 
 
 B. Add a prompt parameter to the GitHub Action configuration instructing it to suppress findings matching common anti-pattern patterns and apply stricter evidence requirements. 
 
@@ -631,7 +631,7 @@ A. Provide the full repository as context instead of just changed files and surr
 
 B. Replace the few-shot examples with a detailed checklist for specific logic edge cases. 
 
-C. Split the review into separate focused prompts (e.g., security, API design, business logic) and consolidate findings before posting. 
+C. Split the review into separate focused prompts (e.g., security, API design, business logic) and consolidate findings before posting. ✅ 
 
 D. Upgrade to a more capable model. 
 
@@ -645,7 +645,7 @@ During initial testing of the automated review pipeline, you notice that reviews
 
 Options: 
 
-A. Add --max-turns 10 --max-budget-usd 2.00 to the Claude invocation. 
+A. Add --max-turns 10 --max-budget-usd 2.00 to the Claude invocation.✅  
 
 B. Set --permission-mode dontAsk to auto-deny tool permission requests not in the allowed set. 
 
@@ -669,7 +669,7 @@ B. Move the cache_control breakpoints from the system prompt to the individual m
 
 C. Add pre-warming requests with max_tokens: 0 at the beginning of each batch. 
 
-D. Use the extended 1-hour cache TTL instead of the default 5-minute TTL. 
+D. Use the extended 1-hour cache TTL instead of the default 5-minute TTL. ✅ 
 
 ⸻ 
 
@@ -687,7 +687,7 @@ B. Implement a multi-pass pipeline where separate LLM calls first extract all co
 
 C. Restructure the prompt to interleave implementation and tests, presenting each function followed immediately by its test cases. 
 
-D. Add explicit instructions directing the model to enumerate each conditional branch and exception path, then verify corresponding test assertions. 
+D. Add explicit instructions directing the model to enumerate each conditional branch and exception path, then verify corresponding test assertions.✅  
 
 ⸻ 
 
@@ -699,7 +699,7 @@ Production reviews reveal inconsistent handling of uncertainty in final reports.
 
 Options: 
 
-A. Instruct the synthesis agent to structure reports with explicit sections distinguishing well-established findings from uncertain findings, including source characterization and methodological context. 
+A. Instruct the synthesis agent to structure reports with explicit sections distinguishing well-established findings from uncertain findings, including source characterization and methodological context. ✅ 
 
 B. Add a verification subagent that cross-references findings across sources and synthesizes only independent sources. 
 
@@ -719,7 +719,7 @@ Options:
 
 A. Implement pattern-based routing that categorizes queries into predefined subagent combinations. 
 
-B. Have the coordinator analyze each query and dynamically decide which subagents to invoke based on its assessment. 
+B. Have the coordinator analyze each query and dynamically decide which subagents to invoke based on its assessment.✅  
 
 C. Create a fast-path for factual questions that bypasses subagents entirely. 
 
@@ -741,7 +741,7 @@ B. The AgentDefinitions are configured correctly, but the coordinator’s system
 
 C. Subagent context isolation prevents task descriptions from being forwarded through ClaudeAgentOptions. 
 
-D. The coordinator’s allowedTools configuration doesn’t include Task, so it cannot invoke the defined subagents. 
+D. The coordinator’s allowedTools configuration doesn’t include Task, so it cannot invoke the defined subagents. ✅ 
 
 Question 49 
 
@@ -755,7 +755,7 @@ A. Both agents access a shared memory store where the web search agent writes fi
 
 B. The web search agent directly invokes the document analysis agent, passing the discovered sources as parameters. 
 
-C. The coordinator agent receives the web search agent’s output and includes relevant findings in the prompt when invoking the document analysis agent. 
+C. The coordinator agent receives the web search agent’s output and includes relevant findings in the prompt when invoking the document analysis agent. ✅ 
 
 D. The agents communicate through an event-driven message queue, with the document analysis agent subscribing to source-discovery events. 
 
@@ -773,7 +773,7 @@ A. Have each agent maintain its own persistent state file and reload it independ
 
 B. Have each agent persist a structured export to a known location. On resume, the coordinator loads the intermediate outputs and reconstructs prompts. 
 
-C. Index all agent outputs in a shared vector store. When resuming, each agent queries the store using semantic search to recover context. 
+C. Index all agent outputs in a shared vector store. When resuming, each agent queries the store using semantic search to recover context. ✅ 
 
 D. Persist the coordinator’s conversation log containing all task delegations and responses. 
 
@@ -791,7 +791,7 @@ A. Require all subagents to output structured claim–source mappings, preservin
 
 B. Have the coordinator inject source identifier prefixes into text before each handoff, then parse them back out during report generation. 
 
-C. Maintain complete transcripts of all subagent interactions and add a citation-resolution agent before report generation. 
+C. Maintain complete transcripts of all subagent interactions and add a citation-resolution agent before report generation.✅  
 
 D. Add a verification step where the report generator uses semantic similarity matching to determine which documents support each conclusion. 
 
@@ -809,7 +809,7 @@ A. Instruct the synthesis agent to always treat the most recent data as authorit
 
 B. Configure the web search agent to only return results from the past 6 months. 
 
-C. Require subagents to include publication or data-collection dates in their structured outputs. 
+C. Require subagents to include publication or data-collection dates in their structured outputs. ✅
 
 D. Add a conflict-resolution agent that automatically discards older data when newer data exists for the same metric. 
 
@@ -825,7 +825,7 @@ Options:
 
 A. Skip summarization and pass full raw outputs from web search and document analysis directly to the report generator. 
 
-B. Have each agent output structured data separating content summaries from source metadata and provenance. 
+B. Have each agent output structured data separating content summaries from source metadata and provenance.✅ 
 
 C. Have the report generator query the web search agent for source URLs whenever citations are needed. 
 
@@ -845,7 +845,7 @@ A. Have the coordinator evaluate synthesis output for gaps, then re-delegate to 
 
 B. Increase the initial breadth of queries sent to web search and document analysis to reduce the probability of missed topics. 
 
-C. Have the report-generation agent note which research questions couldn’t be answered so readers know about the limitations. 
+C. Have the report-generation agent note which research questions couldn’t be answered so readers know about the limitations. ✅
 
 D. Give the synthesis agent direct access to web search tools so it can autonomously gather missing information. 
 
@@ -863,7 +863,7 @@ A. Add a format-conversion layer between subagents and synthesis that transforms
 
 B. Standardize all subagent outputs to JSON with fields for title, summary, score, and citation. 
 
-C. Update the synthesis agent to render each content type appropriately rather than forcing all outputs into a single summary format. 
+C. Update the synthesis agent to render each content type appropriately rather than forcing all outputs into a single summary format. ✅
 
 D. Standardize all subagent outputs to concise summaries with inline citations. 
 
@@ -883,7 +883,7 @@ B. Provide the subagent with tool definitions that allow it to request outputs f
 
 C. Pass reference identifiers and configure the subagent with read access to a shared memory store where other subagents wrote results. 
 
-D. Include the complete findings from both subagents directly in the synthesis subagent prompt. 
+D. Include the complete findings from both subagents directly in the synthesis subagent prompt. ✅
 
 ⸻ 
 
@@ -897,7 +897,7 @@ Options:
 
 A. Create an async orchestration layer, outside the agent, that spawns parallel threads for independent subagents and waits for both results. 
 
-B. Structure the coordinator to emit both Task tool calls for web search and document analysis in a single conversation turn. 
+B. Structure the coordinator to emit both Task tool calls for web search and document analysis in a single conversation turn.✅ 
 
 C. Switch both subagents to use a Haiku-tier model instead of Sonnet to reduce individual request latency. 
 
@@ -913,7 +913,7 @@ You’ve configured the system so that all four subagents have access to the com
 
 Options: 
 
-A. Choosing from 18 tools instead of 4–5 relevant ones increases decision complexity beyond useful specialization benefits. 
+A. Choosing from 18 tools instead of 4–5 relevant ones increases decision complexity beyond useful specialization benefits. ✅
 
 B. The tool definitions consume too much context-window space, leaving insufficient room for task execution. 
 
@@ -935,7 +935,7 @@ B. Implement a message queue where precedent analysis tasks are processed asynch
 
 C. Enable the document analysis subagent to spawn its own specialized subagents dynamically for each precedent. 
 
-D. Have the coordinator spawn parallel document analysis subagents, each focused on a subset of precedents. 
+D. Have the coordinator spawn parallel document analysis subagents, each focused on a subset of precedents.✅ 
 
 Question 60 
 
@@ -947,7 +947,7 @@ Options:
 
 A. Pass only the synthesis draft and have a separate post-processing pipeline match claims to sources and insert citations. 
 
-B. Pass the synthesis draft along with a structured source index that maps key claims to their source URLs and relevant excerpts. 
+B. Pass the synthesis draft along with a structured source index that maps key claims to their source URLs and relevant excerpts. ✅
 
 C. Pass a condensed summary of all prior stages that preserves the main findings and attributes them to source URLs. 
 
