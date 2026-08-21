@@ -20,7 +20,7 @@ A. Switch to using Grep to search for specific function names instead of reading
 
 B. Document all current findings in a summary report, clear context completely, then restart the exploration. 
 
-C. Spawn subagents to investigate specific questions (e.g., final test files for payment processing), while a                                                                                             coordinating agent coordinates findings and preserves high-level understanding. 
+**C. Spawn subagents to investigate specific questions (e.g., final test files for payment processing), while a                                                                                             coordinating agent coordinates findings and preserves high-level understanding.**
 
 D. Clear context with /clear, then selectively re-read only the most critical files discovered so far, relying on memory between context requests. 
 
@@ -34,7 +34,7 @@ B. Use Glob to find files in directories commonly associated with error handling
 
 C. Use Grep to find all files that import the project’s error handling module, then read those files to look for similar error definitions. 
 
-D. Use Grep to search for distinctive text from the error message (like "SYNC_CONFLICT" or "version mismatch"), then inspect the matching files to understand context. 
+**D. Use Grep to search for distinctive text from the error message (like "SYNC_CONFLICT" or "version mismatch"), then inspect the matching files to understand context.** 
 
 Question 4 
 
@@ -48,7 +48,7 @@ B. Consolidate all three servers into a unified MCP server with cross-referencin
 
 C. Add a separate investigation tool to each server that accepts a natural language question and returns relevant content summaries. 
 
-D. Expose each server’s content catalog as MCP resources—issue summaries, documentation hierarchies, database schemas. 
+**D. Expose each server’s content catalog as MCP resources—issue summaries, documentation hierarchies, database schemas.** 
 
 Question 5 
 
@@ -60,7 +60,7 @@ B. Launch parallel subagents to explore different services simultaneously, then 
 
 C. Read all files containing “auth”, “login”, “permission”, or “token” in their content or filename. 
 
-D. Use Grep to find authentication entry points, read those files, then follow imports and function calls from the auth flow toward identity services. 
+**D. Use Grep to find authentication entry points, read those files, then follow imports and function calls from the auth flow toward identity services.** 
 
 ⸻ 
 
@@ -70,7 +70,7 @@ After adding an MCP server with specialized code refactoring tools (extract_func
 
 What’s the most effective way to improve adoption of the MCP refactoring tools? 
 
-A. Enhance the MCP tool descriptions to explain when each tool is preferable to text manipulation and clarify expected inputs and outputs. 
+**A. Enhance the MCP tool descriptions to explain when each tool is preferable to text manipulation and clarify expected inputs and outputs.** 
 
 B. Remove the Write tool from the agent’s configuration for refactoring sessions so it must use the MCP tools. 
 
@@ -84,7 +84,7 @@ Question 7
 
 You’ve configured your Claude agent with three MCP servers: one for Git operations, one for Jira ticket management, and one for documentation search. When a user asks the agent to “create a branch for JIRA-123 and add documentation links to the ticket,” how does the agent access tools across these servers? 
 
-A. Tools from all configured MCP servers are discovered at connection time and available simultaneously to the agent. 
+**A. Tools from all configured MCP servers are discovered at connection time and available simultaneously to the agent.** 
 
 B. The agent automatically selects the most relevant server based on the request and adds only that server’s tools. 
 
@@ -98,7 +98,7 @@ Question 8
 
 An engineer asks the agent to find all files in the monorepo that import the @company/auth package to understand how authentication is used across services. Which built-in tool is most appropriate for this task? 
 
-A. Grep, to search for the import statement pattern across file contents. 
+**A. Grep, to search for the import statement pattern across file contents.** 
 
 B. Bash, to execute find . -type d -name "auth" and explore matching directories. 
 
@@ -114,7 +114,7 @@ Engineers frequently ask the agent to cross-reference code changes with Jira tic
 
 A. Use the Bash tool with curl to call Jira’s REST API, including authentication headers and parsing JSON responses inline. 
 
-B. Integrate an existing Jira MCP server that exposes tickets, comments, and metadata through discoverable MCP interfaces. 
+**B. Integrate an existing Jira MCP server that exposes tickets, comments, and metadata through discoverable MCP interfaces.** 
 
 C. Build a custom MCP server wrapping Jira’s API with tools designed specifically for this team’s code review workflow. 
 
@@ -134,14 +134,14 @@ B. Routing — classify each PR by type (feature, bugfix, refactor) first, then 
 
 C. Single comprehensive prompt — include all instructions in one prompt and let the model handle all three aspects simultaneously. 
 
-D. Prompt chaining — break the review into sequential steps where each aspect (style, security, documentation) is analyzed separately and combined in a final synthesis step. 
+**D. Prompt chaining — break the review into sequential steps where each aspect (style, security, documentation) is analyzed separately and combined in a final synthesis step.** 
 
 
 Question 11 
 
 An engineer used Claude Code yesterday to investigate authentication flows in a legacy monolith, building up significant context over a 2-hour session. Today she wants to continue that specific investigation. She’s worked on three other codebases since then and knows the session isn’t the most recent “auth-deep-dive”. How should she resume? 
 
-A. Use --resume auth-deep-dive to load that specific session by name. 
+**A. Use --resume auth-deep-dive to load that specific session by name.** 
 
 B. Use --session-id with the UUID from yesterday’s session transcript file. 
 
@@ -155,7 +155,7 @@ Your agent needs to insert a new helper function into the middle of a 150-line u
 
 A. Use Edit’s replace_all parameter to target a common pattern and embed the new function in that replacement text. 
 
-B. Use Read to load the file, add the function at the appropriate location, then Write the updated file. 
+**B. Use Read to load the file, add the function at the appropriate location, then Write the updated file.** 
 
 C. Use Bash to append the function definition to the end of the file using redirect syntax. 
 
@@ -173,7 +173,7 @@ B. Resume the session without informing the agent about the changed files.
 
 C. Start a fresh session to ensure the agent works with the current codebase state without stale assumptions. 
 
-D. Resume the session and inform the agent which specific files changed for targeted re-analysis. 
+**D. Resume the session and inform the agent which specific files changed for targeted re-analysis.** 
 
 ⸻ 
 
@@ -185,7 +185,7 @@ A. Create a fixed testing schedule upfront based on directory structure, allocat
 
 B. Systematically read all 200 files to create a complete function inventory before writing any tests. 
 
-C. Use Glob and Grep to map codebase structure, identify heavily-coupled modules, create a prioritized plan for high-impact areas, and adapt as dependencies are discovered. 
+**C. Use Glob and Grep to map codebase structure, identify heavily-coupled modules, create a prioritized plan for high-impact areas, and adapt as dependencies are discovered.** 
 
 D. Start writing tests for the first module alphabetically, using test failures and imports to discover related files organically. 
 
@@ -201,7 +201,7 @@ An engineer submits two requests:
 
 For which request does specifying an explicit multi-phase workflow (such as analyze → propose → implement with verification) provide the most benefit? 
 
-A. Request B, the error-handling task. 
+**A. Request B, the error-handling task.** 
 
 B. Neither request benefits significantly. 
 
@@ -225,7 +225,7 @@ All three are currently written as instructions in your project’s CLAUDE.md. D
 
 A. Rewrite all three requirements in CLAUDE.md using stronger directive language and add examples. 
 
-B. Configure hooks for all three: a pre-tool-use hook blocking edits to migration files, a hook providing logging guidance, and a post-tool-use hook running Prettier after TypeScript edits. 
+**B. Configure hooks for all three: a pre-tool-use hook blocking edits to migration files, a hook providing logging guidance, and a post-tool-use hook running Prettier after TypeScript edits.** 
 
 C. Move all three requirements into .claude/rules as path-scoped rules. 
 
@@ -241,7 +241,7 @@ A. Add venue server to ~/.claude.json and playlist server to mcp.json.
 
 B. Add both servers to your local ~/.claude.json. 
 
-C. Add venue server to mcp.json and playlist server to ~/.claude.json. 
+**C. Add venue server to mcp.json and playlist server to ~/.claude.json.** 
 
 D. Add both servers to the project-level mcp.json file. 
 
@@ -251,7 +251,7 @@ Question 18
 
 Your team has connected a custom MCP server that provides DevOps workflow templates. The server exposes several MCP prompts, such as deploy_checklist and incident_response, in addition to tools. How do these MCP prompts become accessible within Claude Code? 
 
-A. They appear as slash commands (e.g., /mcp_servername_deploy_checklist) that you can invoke, with arguments passed after the command. 
+**A. They appear as slash commands (e.g., /mcp_servername_deploy_checklist) that you can invoke, with arguments passed after the command.** 
 
 B. They are automatically prepended to every conversation as additional system-level context. 
 
@@ -265,7 +265,7 @@ Question 19
 
 You need to add a date validation check ensuring event dates are in the future. This requires adding a conditional statement in one relatively small file. What is the most appropriate approach? 
 
-A. Use direct execution to make the change. 
+**A. Use direct execution to make the change.** 
 
 B. Enter plan mode to analyze how the validation might impact other parts of the reservation flow. 
 
@@ -281,7 +281,7 @@ You’re implementing a new payment processing module that must follow your proj
 
 A. Describe the patterns from the three modules in natural language in your prompt, explaining the transaction handling approach, error handling, and logging conventions Claude should follow. 
 
-B. Use @ references to include the three modules directly in your prompt, giving Claude concrete code examples to follow. 
+**B. Use @ references to include the three modules directly in your prompt, giving Claude concrete code examples to follow.**
 
 C. Ask Claude to explore your codebase to find and understand the transaction, error handling, and logging patterns before generating a new module. 
 
@@ -293,7 +293,7 @@ You’ve asked Claude Code to build a PDF report generation feature. The initial
 
 A. Start fresh with a detailed prompt specifying all formatting requirements upfront. 
 
-B. Show Claude an example of a correctly formatted report and ask it to match the output while fixing the specific issues. 
+**B. Show Claude an example of a correctly formatted report and ask it to match the output while fixing the specific issues.** 
 
 C. Provide all three issues in a single detailed message with exact specifications for each. 
 
@@ -307,7 +307,7 @@ A critical bug is affecting production users. Error logs show exceptions in the 
 
 A. Use direct execution to examine the stack trace, read the relevant code, and implement a fix once you identify the root cause. 
 
-B. Use plan mode to analyze the error in context of the module’s design, enumerate potential root causes, and identify investigation steps before acting. 
+**B. Use plan mode to analyze the error in context of the module’s design, enumerate potential root causes, and identify investigation steps before acting.** 
 
 C. Enter plan mode to explore the module’s architecture and dependencies before attempting any fixes. 
 
@@ -323,7 +323,7 @@ A. Create path-specific rules in .claude/rules with YAML frontmatter scoping err
 
 B. Run /memory to check which memory files are loaded and verify your CLAUDE.md is included. 
 
-C. Search for conflicting instructions in .claude/CLAUDE.md or .claude/rules that might override your project conventions. 
+**C. Search for conflicting instructions in .claude/CLAUDE.md or .claude/rules that might override your project conventions.** 
 
 D. Add more detailed code examples to your CLAUDE.md showing the exact error message pattern for different response types. 
 
@@ -333,7 +333,7 @@ Question 24
 
 Your team frequently migrates React components to Vue. You’ve written a step-by-step workflow for Claude Code to follow during these migrations. You want every developer on the team to invoke it by typing /migrate-component. The workflow should stay in sync as the team refines it. Where should you place the skill file? 
 
-A. In .claude/skills/migrate-component/SKILL.md at the project root, committed to version control. 
+**A. In .claude/skills/migrate-component/SKILL.md at the project root, committed to version control.** 
 
 B. In the project’s .claude/settings.json using a skillOverride entry. 
 
@@ -351,7 +351,7 @@ A. Provide Claude with a detailed natural language specification of the algorith
 
 B. Have Claude extensively research the algorithm and create a detailed implementation plan, then implement based on that plan. 
 
-C. Write a test suite covering expected behaviors, edge cases, and performance requirements, run the tests, then iterate by sharing test failures with each refinement request. 
+**C. Write a test suite covering expected behaviors, edge cases, and performance requirements, run the tests, then iterate by sharing test failures with each refinement request.** 
 
 D. Provide Claude with a reference implementation from documentation, then ask it to rewrite the code to match your codebase’s patterns. 
 
@@ -365,7 +365,7 @@ A. Extract the formatting rules into a dedicated skill that Claude loads automat
 
 B. Split the formatting rules into path-scoped .claude/rules files that load when Claude works on formatting-related files. 
 
-C. Configure a PostToolUse hook with an Edit/Write matcher that automatically runs Prettier on each file Claude modifies. 
+**C. Configure a PostToolUse hook with an Edit/Write matcher that automatically runs Prettier on each file Claude modifies.** 
 
 D. Add a stronger prompt-based check that evaluates whether generated code follows formatting requirements before accepting it. 
 
@@ -381,7 +381,7 @@ B. Create a custom slash command encapsulating the migration transformations, th
 
 C. Update the dependency version, run the test suite, and use Claude Code to fix each failure as it appears. 
 
-D. Enter plan mode to explore library usage across modules, map affected code paths, then create a migration strategy before implementing changes. 
+**D. Enter plan mode to explore library usage across modules, map affected code paths, then create a migration strategy before implementing changes.** 
 
 ⸻ 
 
@@ -397,7 +397,7 @@ Your monorepo contains shared coding standards in docs/standards/:
 
 Claude is applying all standards everywhere. What’s the most effective approach? 
 
-A. Create .claude/rules/ files for each standard with YAML frontmatter specifying the packages/files where each standard applies. 
+**A. Create .claude/rules/ files for each standard with YAML frontmatter specifying the packages/files where each standard applies.** 
 
 B. Use @imports in each package’s CLAUDE.md to reference only the standards relevant to that package. 
 
@@ -413,7 +413,7 @@ You’ve asked Claude to write a data migration script, but the initial output d
 
 A. Provide a test case with example input containing null values and the expected output, then ask Claude to fix it. 
 
-B. Describe the null value problem in detail and ask Claude to regenerate the entire script. 
+**B. Describe the null value problem in detail and ask Claude to regenerate the entire script.**
 
 C. Add “think harder about edge cases” to your prompt and request a complete rewrite. 
 
@@ -427,7 +427,7 @@ Your team wants Claude to follow a detailed code review checklist (8 items cover
 
 A. Configure plan mode as the default for code review sessions. 
 
-B. Create a dedicated review subagent with the checklist embedded in its configuration. 
+**B. Create a dedicated review subagent with the checklist embedded in its configuration.**
 
 C. Add the checklist to the project’s CLAUDE.md file under a “Code Review” section. 
 
@@ -441,7 +441,7 @@ A. Issue the 200 Messages API requests in parallel using concurrent connections.
 
 B. Switch the summarization calls from the Sonnet-tier model to a Haiku-tier model. 
 
-C. Submit the 200 requests to the Message Batches API with unique custom IDs and retrieve results later. 
+**C. Submit the 200 requests to the Message Batches API with unique custom IDs and retrieve results later.**
 
 D. Concatenate all 200 commit messages into a single Messages API request. 
 
@@ -453,7 +453,7 @@ Your automated review CI jobs take 18 seconds to initialize before Claude begins
 
 A. Keep the default initialization and add --exclude-dynamic-system-prompt-sections. 
 
-B. Run with --bare mode and pass --append-system-prompt-file CLAUDE.md. 
+**B. Run with --bare mode and pass --append-system-prompt-file CLAUDE.md.**
 
 C. Replace the default prompt entirely using --system-prompt-file. 
 
@@ -471,7 +471,7 @@ B. Remove conservative filtering instructions and report all potential issues.
 
 C. Expand the context window with related files and dependency information. 
 
-D. Split the review into a findings stage and a separate thresholding stage. 
+**D. Split the review into a findings stage and a separate thresholding stage.**
 
 ⸻ 
 
@@ -483,7 +483,7 @@ A. Build post-processing keyword filters.
 
 B. Add inline suppress comments and preprocess diffs. 
 
-C. Document accepted patterns and conventions in the project’s CLAUDE.md. 
+**C. Document accepted patterns and conventions in the project’s CLAUDE.md.**
 
 D. Analyze only changed lines without surrounding context. 
 
@@ -501,7 +501,7 @@ You built an LLM-powered code review tool that analyzes pull requests and output
 
 Developers can dismiss findings. About 35% of findings get dismissed. You want to analyze these dismissals to understand what your system is getting wrong and improve the prompts accordingly. What change to your output structure would best support this analysis? 
 
-A. Add a detected_pattern field recording the code construct that triggered each finding. 
+**A. Add a detected_pattern field recording the code construct that triggered each finding.** 
 
 B. Add a model_confidence field (0.0–1.0). 
 
@@ -521,7 +521,7 @@ B. Add instructions to “be conservative”.
 
 C. Implement post-processing keyword matching. 
 
-D. Include few-shot examples showing acceptable and problematic patterns. 
+**D. Include few-shot examples showing acceptable and problematic patterns.**
 
 ⸻ 
 
@@ -533,7 +533,7 @@ A. Implement a two-phase generation with a second Claude call scoring tests.
 
 B. Restrict test generation to selected directories. 
 
-C. Document testing standards in CLAUDE.md, including examples of meaningful tests. 
+**C. Document testing standards in CLAUDE.md, including examples of meaningful tests.** 
 
 D. Add post-generation coverage analysis. 
 
@@ -561,7 +561,7 @@ claude -p \
 
 The reviews complete and return feedback, but Claude only comments on the piped diff itself—it never reads surrounding files in the repository to understand broader context. You want Claude to read related files while still applying your custom review instructions. 
 
-A. Keep --system-prompt and add --allowedTools "Read,Grep". 
+**A. Keep --system-prompt and add --allowedTools "Read,Grep".**
 
 B. Stop piping the diff via stdin and embed it in the prompt. 
 
@@ -575,7 +575,7 @@ Question 39
 
 Your CI pipeline performs security-focused code reviews on approximately 50 PRs daily. Reviews are non-blocking—developers merge after tests pass and address findings in follow-up commits. You are evaluating the Message Batches API for cost reduction. What factor most determines whether batch processing is appropriate for this use case? 
 
-A. Whether review feedback arriving up to 24 hours after PR creation remains actionable. 
+**A. Whether review feedback arriving up to 24 hours after PR creation remains actionable.** 
 
 B. Whether your result processing can handle reviews arriving in a different order than submitted. 
 
@@ -593,7 +593,7 @@ Options:
 
 A. The extended session length caused the context window to fill with conversation history, leaving less room for thorough analysis. 
 
-B. Claude retains context about its prior reasoning in the session, making it less likely to question its own decisions. 
+**B. Claude retains context about its prior reasoning in the session, making it less likely to question its own decisions.**
 
 C. The CI environment has access to the full codebase context while the local session only sees the current file. 
 
