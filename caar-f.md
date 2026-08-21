@@ -6,7 +6,7 @@ Your agent has analyzed a complex service module—reading 23 source files, trac
 
 A. Start two fresh sessions, having each re-read the relevant source files before beginning. 
 
-**B. Resume the analysis session with fork, creating a separate branch for each testing strategy. **
+**B. Resume the analysis session with fork, creating a separate branch for each testing strategy.**
 
 C. Continue in the original session, developing end-to-end tests first, then snapshot tests sequentially. 
 
