@@ -143,7 +143,7 @@ B) Enhance the system prompt to state that customer verification via `get_custom
 C) Add few-shot examples showing the agent always calling `get_customer` first, even when customers volunteer order details.
 D) Implement a routing classifier that analyzes each request and enables only the subset of tools appropriate for that request type.
 
-**Correct Answer: A**
+**Correct Answer: **
 When a specific tool sequence is required for critical business logic, programmatic enforcement provides deterministic guarantees that prompt-based approaches cannot. Options B and C rely on probabilistic LLM compliance. Option D addresses tool availability rather than tool ordering.
 
 ---
@@ -157,7 +157,7 @@ B) Relying on natural language signals in the assistant's text is unreliable; th
 C) The loop should terminate as soon as any tool call fails, since continuing after a failure will corrupt the conversation history.
 D) Checking response text is only valid in synchronous mode; you must use a callback handler for proper loop control in async contexts.
 
-**Correct Answer: B**
+**Correct Answer: **
 Inspecting `stop_reason` is the canonical method for agentic loop control: continue iterating when `stop_reason` is `"tool_use"`, stop when it is `"end_turn"`. Natural language phrases like "I have completed" are not reliable termination signals because Claude's phrasing varies across responses and prompt updates. Options A and C are based on incorrect assumptions about how tools interact with response text. Option D conflates asynchronous execution patterns with loop control logic.
 
 ---
@@ -171,7 +171,7 @@ B) Iteration caps are a reasonable safety boundary for long-running tasks but sh
 C) The iteration cap should be replaced with a time-based timeout, since token counts are a more reliable measure of completion than iteration count.
 D) Iteration caps are unnecessary if the system prompt instructs the agent to always request only the minimum tools needed.
 
-**Correct Answer: B**
+**Correct Answer: **
 The agentic loop should terminate primarily when `stop_reason` equals `"end_turn"`, which signals that the model has finished its task. An iteration cap can serve as a safety guardrail against runaway loops, but treating it as the primary stopping mechanism means the loop may cut off legitimate multi-step investigations. Options A and C misstate recommended practice. Option D conflates prompt-based guidance with loop control: even a well-prompted agent may legitimately need many tool calls for complex investigations.
 
 ---
@@ -185,7 +185,7 @@ B) When the model needs to reason across multiple tool results simultaneously to
 C) When the number of tool calls per session exceeds 10, since larger histories slow down the API.
 D) When tools return results faster than 200ms, making history appending redundant.
 
-**Correct Answer: B**
+**Correct Answer: **
 The agentic loop depends on tool results being present in conversation history so the model can reason about what it has already discovered before deciding its next action. Summaries may omit field values, error codes, or conditional data the model needs to make correct decisions. Option A is a valid concern but not the primary performance risk for text-based research tasks. Options C and D are not recognized failure modes for this architecture.
 
 ---
@@ -199,7 +199,7 @@ B) The coordinator agent's task decomposition is too narrow, resulting in subage
 C) The web search agent's queries are not comprehensive enough and need to be expanded to cover more creative industry sectors.
 D) The document analysis agent is filtering out sources related to non-visual creative industries due to overly restrictive relevance criteria.
 
-**Correct Answer: B**
+**Correct Answer: **
 The coordinator's logs reveal the root cause directly: it decomposed "creative industries" into only visual arts subtasks. The subagents executed their assigned tasks correctly. The problem is what they were assigned.
 
 ---
@@ -213,7 +213,7 @@ B) Have each subagent evaluate its own relevance to the current query and self-s
 C) Design the coordinator to dynamically select which subagents to invoke based on query complexity and type, rather than always routing through the full pipeline.
 D) Reduce the number of subagents from four to two by merging web search and document analysis into a single "retrieval" agent.
 
-**Correct Answer: C**
+**Correct Answer: **
 A coordinator that always runs the full pipeline regardless of query complexity wastes resources and adds latency for simple requests. The correct design is a coordinator that evaluates the query and selects only the subagents needed for that specific task. Option A replaces adaptive intelligence with a brittle keyword table. Option B distributes coordination logic across subagents, breaking the hub-and-spoke pattern and reducing observability. Option D reduces capability unnecessarily instead of improving routing logic.
 
 ---
@@ -227,7 +227,7 @@ B) The coordinator should re-invoke the document analysis subagent with an expli
 C) Send all five sources again to a new document analysis subagent instance, which will re-analyze the three already-completed sources along with the two missing ones.
 D) Let the coordinator generate its own analysis of the remaining two sources directly, rather than spawning another subagent delegation.
 
-**Correct Answer: B**
+**Correct Answer: **
 The coordinator's role includes evaluating output for gaps and re-delegating targeted work to close those gaps. Re-invoking the subagent with only the unfinished sources and providing the completed findings as context is efficient and correct. Option A asks synthesis to fabricate content, which undermines report accuracy. Option C wastes resources by re-processing already-completed sources. Option D bypasses the coordinator-subagent architecture and ignores the subagent's specialization.
 
 ---
@@ -243,7 +243,7 @@ B) `"Task"` is not included in the coordinator's `allowedTools`, so it cannot sp
 C) The coordinator's system prompt does not include instructions to use the `Task` tool, so the model never attempts to call it.
 D) Subagent invocation requires the coordinator to be running in plan mode rather than direct execution mode.
 
-**Correct Answer: B**
+**Correct Answer: **
 The `Task` tool is the mechanism for spawning subagents in the Claude Agent SDK. For a coordinator to invoke subagents, `"Task"` must be explicitly included in its `allowedTools`. Simply having other tools available does not grant subagent spawning capability. Option A describes a configuration parameter that does not exist. Option C conflates prompt instructions with capability gating: even a well-prompted coordinator cannot call a tool that is not in its allowed set. Option D conflates plan mode with subagent spawning.
 
 ---
@@ -257,7 +257,7 @@ B) Use structured data formats that separate claim content from metadata (source
 C) Have the coordinator concatenate all subagent outputs into a single text block before forwarding to synthesis, since synthesis will extract citations naturally.
 D) Configure the web search subagent to return only source URLs, and have the synthesis agent re-read each source to reconstruct the findings.
 
-**Correct Answer: B**
+**Correct Answer: **
 Structured data formats that separate content from metadata ensure that claim-source mappings survive the handoff between agents. When context is passed as unstructured text, citation information is easily lost. Option A introduces redundant work and potentially different search results. Option C risks losing the claim-source associations during concatenation. Option D is extremely inefficient and requires the synthesis agent to redo retrieval work.
 
 ---
@@ -269,7 +269,7 @@ B) Emit all three `Task` tool calls in a single coordinator response, which allo
 C) Route all three subtopics through a single subagent sequentially, sharing context between them to reduce total memory usage.
 D) Use a single subagent with three separate prompts in sequence, passing prior results as context for each subsequent prompt.
 
-**Correct Answer: B**
+**Correct Answer: **
 The Claude Agent SDK supports parallel subagent execution by emitting multiple `Task` tool calls in a single coordinator response. This maximizes throughput for independent subtopics that do not depend on each other's results. Option A introduces unnecessary serial latency. Option C assumes a dependency that the question does not establish. Option D collapses three specialists into one sequential process, eliminating parallelism.
 
 ---
@@ -285,7 +285,7 @@ B) Add few-shot examples showing the correct three-step sequence alongside the s
 C) Implement a programmatic prerequisite that blocks `close_account` from executing until `get_customer` has returned a verified customer ID.
 D) Add a routing classifier that analyzes the request type and pre-selects the appropriate tools before the agent begins.
 
-**Correct Answer: C**
+**Correct Answer: **
 When a tool ordering requirement has serious consequences (unauthorized account closures), programmatic enforcement provides deterministic guarantees. Prompt instructions have a non-zero failure rate even when explicit. Option A relies on probabilistic compliance, which the logs already show is insufficient. Option B improves the odds but still does not guarantee compliance. Option D addresses tool selection rather than ordering enforcement.
 
 ---
@@ -299,7 +299,7 @@ B) Decompose the three concerns into distinct investigation items and process ea
 C) Process the three issues sequentially but cache intermediate results so subsequent issues benefit from data already retrieved.
 D) Delegate all three issues to a single specialized "multi-issue" subagent that handles complex requests with multiple concerns.
 
-**Correct Answer: B**
+**Correct Answer: **
 When a customer presents multiple independent concerns, decomposing them into parallel investigation items dramatically reduces latency. Each concern can be investigated simultaneously using the shared customer context already retrieved. Option A creates a poor customer experience and extra work for the customer. Option C improves caching but does not eliminate the serial bottleneck. Option D creates an undifferentiated subagent that doesn't reflect the coordinator-subagent specialization pattern.
 
 ---
@@ -315,7 +315,7 @@ B) Add format conversion instructions to the system prompt explaining how to int
 C) Implement `PostToolUse` hooks that intercept tool results from each source and normalize timestamps, dates, and status codes into a consistent format before the model processes them.
 D) Add a post-processing step after the agent produces its final response to re-format any dates and statuses that appear in the output.
 
-**Correct Answer: C**
+**Correct Answer: **
 `PostToolUse` hooks are the correct mechanism for intercepting and transforming tool results before the model processes them. This ensures the model always sees normalized data regardless of backend heterogeneity. Option A requires backend changes that may not be feasible and introduces coupling. Option B relies on probabilistic compliance and adds token overhead. Option D applies normalization after the model has already reasoned on inconsistent data, which cannot repair any incorrect conclusions already made.
 
 ---
@@ -329,7 +329,7 @@ B) Add 10 few-shot examples in the system prompt, all demonstrating the agent re
 C) Implement a hook that intercepts outgoing `process_refund` tool calls, checks the refund amount, and blocks execution or redirects to the manager approval workflow when the amount exceeds $500.
 D) Implement a validation step that runs after `process_refund` completes and reverses any refunds that exceeded the threshold.
 
-**Correct Answer: C**
+**Correct Answer: **
 Business rules that require guaranteed compliance must be enforced programmatically, not through prompt instructions alone. A hook that intercepts `process_refund` calls before execution provides deterministic enforcement regardless of how the model interprets the system prompt. Options A and B both improve adherence probabilistically but cannot guarantee zero violations. Option D runs after the action has already been taken, which means the policy violation has already occurred.
 
 ---
@@ -343,7 +343,7 @@ B) Modify the hook to return only the formatted summary to the model, trimming t
 C) Increase the model's `max_tokens` parameter to accommodate the additional context from both raw and formatted output.
 D) Switch from `PostToolUse` hooks to pre-processing the Bash commands themselves to produce shorter output.
 
-**Correct Answer: B**
+**Correct Answer: **
 `PostToolUse` hooks can trim verbose tool outputs to only the relevant data before the model processes them. Keeping both raw and summary output doubles the context consumption from each tool call. Modifying the hook to return only the formatted summary addresses the root cause directly. Option A removes normalization benefits. Option C increases output capacity but does not address the growing input context. Option D would require significant changes to tool invocation patterns and may not be feasible for all commands.
 
 ---
@@ -359,7 +359,7 @@ B) Prompt chaining with sequential focused passes: one pass per review aspect (s
 C) A single comprehensive pass that examines all three aspects simultaneously to capture cross-cutting concerns.
 D) Spawn three fully independent agents without shared context, then merge their outputs in a final aggregation step.
 
-**Correct Answer: B**
+**Correct Answer: **
 When a workflow has predictable, well-defined aspects that must each be covered, prompt chaining with sequential focused passes is the appropriate pattern. Each pass dedicates full attention to one concern rather than dividing attention across all three. Option A uses dynamic decomposition for a workflow whose structure is already known, adding unnecessary overhead. Option C suffers from the attention dilution problem that prompt chaining is designed to solve. Option D loses cross-file integration context by fully isolating the three agents.
 
 ---
@@ -373,7 +373,7 @@ B) Dynamic adaptive decomposition: the agent first maps the affected services an
 C) Split the investigation between two agents: one agent reads logs while the other reads source code, and they report findings independently to a human operator.
 D) Have the agent run a comprehensive search of all changed files in the past two weeks and produce a ranked list of candidates for manual review.
 
-**Correct Answer: B**
+**Correct Answer: **
 Open-ended investigation tasks with unknown scope require dynamic adaptive decomposition, where the agent builds its investigation plan based on intermediate findings rather than following a fixed sequence. A static prompt chain cannot adapt when the investigation reveals unexpected service dependencies or anomalous patterns. Option A is appropriate for predictable multi-aspect reviews, not exploratory investigations. Option C removes the coordinating intelligence and requires human intervention for synthesis. Option D is a single-pass heuristic that does not apply the model's reasoning capability.
 
 ---
@@ -389,7 +389,7 @@ B) Start a completely new session each time, since stale tool results from the p
 C) Resume the named session without any notification about file changes; the agent will detect modifications automatically when it next reads those files.
 D) Use `fork_session` to create a branch of the current session before stepping away, then resume from the fork the next day.
 
-**Correct Answer: A**
+**Correct Answer: **
 When resuming a session after code modifications, the correct approach is to use `--resume <session-name>` to continue the named session and explicitly inform the agent about which files changed so it can target re-analysis appropriately. Option B is overly conservative: starting fresh is appropriate when prior tool results are broadly stale, but when only a few known files changed, resumption with targeted context about those changes is more efficient. Option C is incorrect because the agent does not automatically detect file changes on resume. Option D misuses `fork_session`, which is designed for exploring divergent approaches from a shared baseline, not for session continuity across time gaps.
 
 ---
@@ -403,7 +403,7 @@ B) Use `--resume` to resume the current session twice in parallel, once for each
 C) Use `fork_session` to create two independent branches from the current session, then explore each approach in its respective branch.
 D) Continue in the same session, exploring one approach, then using `/compact` to clear context before exploring the second approach.
 
-**Correct Answer: C**
+**Correct Answer: **
 `fork_session` is designed precisely for this scenario: creating independent branches from a shared analysis baseline to explore divergent approaches. Each branch inherits the common findings and can be explored independently without contaminating the other. Option A requires duplicating context and does not preserve the live session state. Option B describes a mechanism that does not work this way: `--resume` continues a single session sequentially, not in parallel branches. Option D uses `/compact` destructively, losing the baseline context needed for the second exploration.
 
 ---
@@ -419,7 +419,7 @@ B) Expand each tool's description to include input formats it handles, example q
 C) Implement a routing layer that parses user input before each turn and pre-selects the appropriate tool based on detected keywords.
 D) Consolidate both tools into a single `lookup_entity` tool that accepts any identifier and internally determines which backend to query.
 
-**Correct Answer: B**
+**Correct Answer: **
 Tool descriptions are the primary mechanism LLMs use for tool selection. Option B directly addresses the root cause. Few-shot examples (A) add token overhead without fixing the underlying issue. A routing layer (C) is over-engineered. Consolidating tools (D) requires more effort than a "first step" warrants.
 
 ---
@@ -433,7 +433,7 @@ B) Add a system prompt instruction: "Always use ISO-8601 format when calling loo
 C) Add input schema validation that rejects malformed inputs and returns an error to the agent.
 D) Split `lookup_order` into two tools: `lookup_order_by_id` and `lookup_order_by_date` to reduce ambiguity.
 
-**Correct Answer: A**
+**Correct Answer: **
 Tool descriptions are the primary mechanism the model uses to understand how to call a tool. Adding format constraints and examples directly to the description gives the model the information it needs at decision time. Option B adds token overhead in the system prompt but is more fragile than a tool-specific description. Option C adds validation but does not prevent the model from sending malformed inputs in the first place, creating unnecessary error cycles. Option D addresses a different problem (disambiguation) rather than the format guidance issue.
 
 ---
@@ -447,7 +447,7 @@ B) Rename the tools to reflect their distinct data sources and rewrite their des
 C) Consolidate all three tools into one tool with a `source` parameter that specifies which backend to query.
 D) Keep the current tools but randomize which one the agent calls, then merge the responses in a post-processing step.
 
-**Correct Answer: B**
+**Correct Answer: **
 Ambiguous or overlapping tool names and descriptions cause misrouting. Renaming tools to reflect their distinct backends and writing descriptions that explain what each one returns, where its data comes from, and when to use it are the right fixes. Option A may reduce misrouting but does not fix the root problem: the tool descriptions themselves are indistinguishable. Option C collapses three specialized tools into one generic tool with a parameter, which shifts the burden of correct routing back to the model in a less structured way. Option D is not a viable architecture.
 
 ---
@@ -461,7 +461,7 @@ B) Implement automatic retry logic with exponential backoff within the subagent,
 C) Catch the timeout within the subagent and return an empty result set marked as successful.
 D) Propagate the timeout exception directly to a top-level handler that terminates the entire research workflow.
 
-**Correct Answer: A**
+**Correct Answer: **
 Structured error context gives the coordinator the information it needs to make intelligent recovery decisions. Option B's generic status hides valuable context. Option C suppresses the error, preventing any recovery. Option D terminates the entire workflow unnecessarily.
 
 ---
@@ -475,7 +475,7 @@ B) Return structured error metadata including `errorCategory` (transient/validat
 C) Return a verbose error log with the full stack trace and system state so the agent has maximum information to reason from.
 D) Return a numeric error code and have the system prompt map each code to a recovery action.
 
-**Correct Answer: B**
+**Correct Answer: **
 Structured error metadata gives the agent the information it needs to choose the correct recovery path: retry a transient failure, ask the customer for corrected input on a validation failure, or explain a policy block on a business rule violation. Option A relies on HTTP semantics that may not map cleanly to all failure categories and are not as expressive as structured fields. Option C provides excessive detail that consumes context without improving decision quality. Option D encodes recovery logic in the system prompt rather than in a principled error structure, making it harder to maintain.
 
 ---
@@ -489,7 +489,7 @@ B) Distinguish between access failures (where the backend could not be reached o
 C) Add a `confidence` field to the response so the agent can infer whether the empty result is a real outcome or a failure.
 D) Implement automatic retry in the MCP tool itself, so the agent never sees an empty result unless all retries were exhausted.
 
-**Correct Answer: B**
+**Correct Answer: **
 Access failures and valid empty results are fundamentally different conditions that require different agent responses. Using the `isError` flag for access failures while returning `{"results": [], "status": "success"}` only for genuine empty-result queries gives the coordinator accurate information to make retry and recovery decisions. Option A masks failures by fabricating content. Option C introduces ambiguity; a confidence score on a genuinely empty result is meaningless. Option D handles retries locally but does not solve the agent's inability to distinguish the two conditions.
 
 ---
@@ -503,7 +503,7 @@ B) The response should include `isRetryable: false` and a customer-appropriate e
 C) The tool should suppress the `isError` flag for fraud blocks and instead return the result as a successful response with a `blocked: true` field.
 D) The response should include the fraud risk score so the agent can decide whether the score is high enough to justify blocking.
 
-**Correct Answer: B**
+**Correct Answer: **
 A business rule block from fraud detection is a non-retryable error. Including `isRetryable: false` signals to the agent that retrying will not resolve the situation, preventing redundant attempts that trigger compliance alerts. A customer-appropriate explanation helps the agent communicate the block appropriately. Option A implies the block is temporary and retriable, which is the opposite of the intended behavior. Option C hides the error nature of the response and makes recovery logic less clear. Option D provides fraud risk data to the agent that it may not be authorized to act on directly.
 
 ---
@@ -517,7 +517,7 @@ B) Have the synthesis agent accumulate all verification needs and return them as
 C) Give the synthesis agent access to all web search tools so it can handle any verification need directly without round-trips.
 D) Have the web search agent proactively cache extra context around each source during initial research, anticipating what the synthesis agent might need to verify.
 
-**Correct Answer: A**
+**Correct Answer: **
 Option A applies the principle of least privilege by giving the synthesis agent only what it needs for the 85% common case while preserving the existing coordination pattern for complex cases. Option B creates blocking dependencies. Option C over-provisions the synthesis agent. Option D relies on speculative caching.
 
 ---
@@ -531,7 +531,7 @@ B) Having access to tools outside its specialization increases the likelihood th
 C) 18 tools will exceed the context window limit for tool schemas, causing API errors on every request.
 D) The additional tools will slow down the synthesis agent because the model must read all tool descriptions before producing output.
 
-**Correct Answer: B**
+**Correct Answer: **
 Giving an agent access to tools outside its specialization degrades tool selection reliability. A synthesis agent with web search tools will sometimes initiate new searches rather than working with the findings already provided, breaking the intended workflow. Option A overstates the effect: the agent will still call tools, but may call the wrong ones. Option C is not a realistic failure mode for 18 tools with typical schema sizes. Option D mischaracterizes how tool descriptions affect latency.
 
 ---
@@ -545,7 +545,7 @@ B) Set `tool_choice: "any"` so the model must call at least one tool, though it 
 C) Set `tool_choice: {"type": "tool", "name": "generate_summary"}` to force the model to call `generate_summary` specifically.
 D) Remove all other tools from the agent's tool list so `generate_summary` is the only option available.
 
-**Correct Answer: C**
+**Correct Answer: **
 Forced tool selection via `tool_choice: {"type": "tool", "name": "generate_summary"}` guarantees the model calls that specific tool on every invocation. Option A (`"auto"`) allows the model to return text without calling any tool. Option B (`"any"`) guarantees a tool call but does not guarantee which tool, so the model might choose a different one. Option D achieves the same result indirectly but removes legitimate tools the agent may need for its other tasks.
 
 ---
@@ -561,7 +561,7 @@ B) Add the MCP server to the project-scoped `.mcp.json` file with the token spec
 C) Add the MCP server configuration to the root `CLAUDE.md` file under a `[mcp_servers]` section.
 D) Create a setup script that each developer runs once to add the MCP server to their personal `~/.claude.json` with their token.
 
-**Correct Answer: B**
+**Correct Answer: **
 Project-scoped `.mcp.json` with environment variable expansion is the correct pattern for shared MCP servers: it is committed to the repository so all team members get the configuration automatically, and tokens are injected via environment variables at runtime rather than committed as plaintext. Option A requires manual per-person setup and hardcodes tokens. Option C describes a configuration mechanism that does not exist in CLAUDE.md. Option D also requires manual setup and does not solve the commit-to-version-control problem.
 
 ---
@@ -575,7 +575,7 @@ B) Expose content catalogs as MCP resources, giving the agent visibility into av
 C) Reduce the number of tools in the MCP server by merging similar tools together to minimize the discovery surface.
 D) Add a caching layer that stores the results of previous exploratory calls and reuses them across sessions.
 
-**Correct Answer: B**
+**Correct Answer: **
 MCP resources are designed to expose content catalogs so agents know what data is available without making exploratory tool calls. This gives the agent upfront visibility at connection time, reducing the need for repeated discovery queries. Option A would still require a tool call to discover available resources. Option C reduces functionality to avoid a structural problem. Option D addresses symptom rather than cause, and cross-session caching of content catalogs may return stale data.
 
 ---
@@ -591,7 +591,7 @@ B) Use `Glob` to find all `.ts` files, then use `Read` to open each file and che
 C) Use `Grep` to search for the import pattern across all TypeScript files in the codebase.
 D) Use `Read` on the project root directory to get a file listing, then recursively `Read` each subdirectory.
 
-**Correct Answer: C**
+**Correct Answer: **
 `Grep` is the correct built-in tool for searching file contents across a codebase. It efficiently searches all TypeScript files for the import pattern without requiring separate file enumeration. Option A uses Bash shell commands that should be replaced by dedicated tools when those tools are available. Option B uses `Glob` for enumeration and then `Read` on each file, which is far less efficient than `Grep` for a content search. Option D uses `Read` for directory traversal, which is not a supported use of that tool.
 
 ---
@@ -605,7 +605,7 @@ B) Use `Read` to load the full file contents, identify the exact surrounding con
 C) Use `Write` to overwrite the entire file with a corrected version, based on the contents loaded by `Read`.
 D) Use `Grep` to locate the line number of each occurrence, then use `Edit` with a line number parameter to target the correct one.
 
-**Correct Answer: B**
+**Correct Answer: **
 When `Edit` fails due to non-unique text, the correct first step is to use `Read` to examine the full file and find enough surrounding context to construct a unique `old_string`. This is more surgical than a full `Write` overwrite. Option C using `Read + Write` is a valid fallback but should only be used when `Edit` still cannot find a unique anchor even with additional context. Option A uses Bash shell commands when built-in tools should be preferred, and would replace all occurrences rather than targeting the correct one. Option D describes a line number parameter that `Edit` does not support.
 
 ---
@@ -621,7 +621,7 @@ B) The `~/.claude/CLAUDE.md` file is user-scoped and not version-controlled, so 
 C) CLAUDE.md files must be placed in the `.claude/` subdirectory to be recognized; a root-level `CLAUDE.md` is ignored.
 D) The configuration hierarchy requires the project-level file to explicitly import from user-level files using `@import`.
 
-**Correct Answer: B**
+**Correct Answer: **
 User-level configuration in `~/.claude/CLAUDE.md` applies only to the individual developer and is never committed to version control. Teammates will not see it regardless of their setup. To share standards across the team, those instructions must live in the project-level `CLAUDE.md` or `.claude/CLAUDE.md`, which are committed to the repository. Options A and D describe mechanisms that do not exist. Option C is incorrect because a root-level `CLAUDE.md` is a valid project-level location.
 
 ---
@@ -633,7 +633,7 @@ B) Create a separate `CLAUDE.md` in each top-level package directory and delete 
 C) Add inline section headers to the monolithic file and use the `/memory` command to tell Claude which section to prioritize for each task.
 D) Break the root `CLAUDE.md` into topic files and use `@import` directives in the root file to pull them all in unconditionally.
 
-**Correct Answer: A**
+**Correct Answer: **
 The `.claude/rules/` directory is designed for exactly this scenario: organizing topic-specific rule files with YAML frontmatter path scoping so each rule set activates only when editing relevant files. This reduces irrelevant context and token usage. Option B would require duplicating shared rules across package directories. Option C relies on manual intervention each session and is not maintainable. Option D with unconditional `@import` addresses the maintenance concern but not the wrong-conventions problem, since all rules would still load regardless of context.
 
 ---
@@ -645,7 +645,7 @@ B) Keep the 600-line root file but add explicit section headers and instruct dev
 C) Delete the root `CLAUDE.md` and rely entirely on package-level files, accepting that shared conventions must be duplicated across packages.
 D) Move all rules into `.claude/rules/` files and tag each with a `projects:` key in their frontmatter specifying which subdirectory the rule applies to.
 
-**Correct Answer: A**
+**Correct Answer: **
 The `@import` syntax in CLAUDE.md is designed for exactly this modular pattern: shared conventions in the root file, package-specific rules in each package's own `CLAUDE.md`, with the root file importing common standards that apply globally. This keeps each file focused and maintainable while eliminating rule bleed between packages. Option B relies on developer discipline to manually scope rules each session, which is error-prone and does not scale. Option C eliminates the shared baseline and requires duplicating common conventions across five files, creating maintenance drift. Option D is a valid approach for path-scoped rules within a single project but does not address the need for package-level CLAUDE.md isolation.
 
 ---
@@ -659,7 +659,7 @@ B) In `~/.claude/commands/` in each developer's home directory
 C) In the `CLAUDE.md` file at the project root
 D) In a `.claude/config.json` file with a `commands` array
 
-**Correct Answer: A**
+**Correct Answer: **
 Project-scoped custom slash commands are stored in `.claude/commands/` within the repository, version-controlled and automatically available to all developers. Option B is for personal, non-shared commands. Option C is for project instructions, not command definitions. Option D describes a mechanism that doesn't exist.
 
 ---
@@ -671,7 +671,7 @@ B) Set `context: fork` in the skill's frontmatter to run the skill in an isolate
 C) Move the skill file from `.claude/skills/` to `.claude/commands/` so it runs as a command rather than a skill.
 D) Add `argument-hint: "service-name"` to the frontmatter so the skill receives a clean input without inheriting session context.
 
-**Correct Answer: B**
+**Correct Answer: **
 The `context: fork` frontmatter option runs the skill in an isolated sub-agent context. All exploratory output, intermediate tool calls, and reasoning happen in the fork and do not accumulate in the main conversation context. Only the final output is returned to the parent session. Option A would disable the tool use the skill depends on. Option C does not change execution isolation behavior. Option D is for prompting the user for input parameters, unrelated to output isolation.
 
 ---
@@ -685,7 +685,7 @@ B) Consolidate all conventions in the root `CLAUDE.md` file under headers for ea
 C) Create skills in `.claude/skills/` for each code type that include the relevant conventions in their `SKILL.md` files.
 D) Place a separate `CLAUDE.md` file in each subdirectory containing that area's specific conventions.
 
-**Correct Answer: A**
+**Correct Answer: **
 `.claude/rules/` with glob patterns (e.g., `**/*.test.tsx`) allows conventions to be automatically applied based on file paths regardless of directory location. Option B relies on inference rather than explicit matching. Option C requires manual invocation. Option D can't easily handle files spread across many directories.
 
 ---
@@ -697,7 +697,7 @@ B) Create a rules file in `.claude/rules/terraform.md` with YAML frontmatter spe
 C) Add the Terraform rules to the root `CLAUDE.md` under a clearly marked section, and instruct Claude in the system prompt to apply them only to `.tf` files.
 D) Create a skill in `.claude/skills/terraform.md` with `allowed-tools` restricted to file operations on the `infra/` directory.
 
-**Correct Answer: B**
+**Correct Answer: **
 The `.claude/rules/` directory with YAML frontmatter path scoping is the correct mechanism for conditionally loading conventions. Setting `paths: ["infra/**/*"]` ensures the Terraform rules load only when editing files in that directory tree. Option A would work for files inside `infra/` but cannot use glob patterns to further filter by file type. Option C relies on Claude's inference rather than explicit path matching, leading to inconsistent behavior. Option D requires manual skill invocation and does not activate automatically.
 
 ---
@@ -711,7 +711,7 @@ B) Start with direct execution and make changes incrementally, letting the imple
 C) Use direct execution with comprehensive upfront instructions detailing exactly how each service should be structured.
 D) Begin in direct execution mode and only switch to plan mode if you encounter unexpected complexity during implementation.
 
-**Correct Answer: A**
+**Correct Answer: **
 Plan mode is designed for complex tasks involving large-scale changes, multiple valid approaches, and architectural decisions. Option B risks costly rework when dependencies are discovered late. Option C assumes you already know the right structure without exploring the code. Option D ignores that the complexity is already stated.
 
 ---
@@ -723,7 +723,7 @@ B) Direct execution, because the task is well-scoped with a clear fix that does 
 C) Plan mode, because exploring the codebase first prevents Claude from making assumptions about dependencies.
 D) Use direct execution first, but run a quick plan mode scan afterward to catch any side effects before committing.
 
-**Correct Answer: B**
+**Correct Answer: **
 Direct execution is appropriate for simple, well-understood, single-location changes with clear scope. Plan mode is designed for tasks involving large-scale changes, multiple valid approaches, architectural decisions, or multi-file modifications. A null-check to one function meets none of the criteria for plan mode. Options A and C describe an over-cautious heuristic that does not reflect the intended use of plan mode. Option D inverts the correct workflow: plan mode is used before execution to explore and decide, not after as a post-execution check.
 
 ---
@@ -735,7 +735,7 @@ B) Use the Explore subagent to isolate verbose discovery output, having it retur
 C) Run `/compact` immediately after each tool call to keep the context window from growing.
 D) Restrict Claude to reading only entry point files during plan mode to limit tool call volume.
 
-**Correct Answer: B**
+**Correct Answer: **
 The Explore subagent is specifically designed to isolate verbose discovery work from the main conversation context. It performs the exploration and returns a structured summary, preventing raw tool results from consuming the main session's context budget. Option A abandons the architectural exploration prematurely. Option C helps but running `/compact` after every tool call is operationally cumbersome and loses detail that may still be needed. Option D artificially limits the exploration and would produce an incomplete analysis for complex migrations.
 
 ---
@@ -749,7 +749,7 @@ B) Provide 2-3 concrete input/output examples showing the exact transformation e
 C) Switch to plan mode so Claude can explore the codebase before formatting dates.
 D) Ask Claude to generate a formatting function first, then apply it in a second pass.
 
-**Correct Answer: B**
+**Correct Answer: **
 Concrete input/output examples are the most effective way to communicate expected transformations when prose instructions are interpreted inconsistently. Showing `"3/15/2024" -> "2024-03-15"` is unambiguous in a way that "use ISO 8601" is not. Option A is unlikely to improve results; emphasis does not resolve ambiguity. Option C is for architectural decisions, not formatting refinement. Option D adds complexity and still does not clarify what the correct transformation looks like.
 
 ---
@@ -761,7 +761,7 @@ B) Use the interview pattern: ask Claude to question the team about their requir
 C) Start with a minimal implementation and iterate by describing issues found during code review.
 D) Provide a complete test suite first and ask Claude to write code that passes all tests.
 
-**Correct Answer: B**
+**Correct Answer: **
 The interview pattern is designed to surface design considerations and uncover assumptions the developer may not have anticipated before any implementation begins. It is particularly valuable in domains like security where overlooked edge cases carry high risk. Option A bypasses the opportunity to surface gaps before implementation is locked in. Option C defers the discovery of design issues until after implementation, when the cost of changes is higher. Option D (test-driven iteration) is effective for well-defined behavior but cannot surface considerations the team has not yet thought of.
 
 ---
@@ -773,7 +773,7 @@ B) Fix them sequentially: address each issue in a separate message and verify th
 C) Ask Claude to regenerate the entire function from scratch rather than patching the existing code.
 D) Address the off-by-one error and null check together since they are in loops, then fix the sort order separately.
 
-**Correct Answer: B**
+**Correct Answer: **
 When issues are independent, sequential iteration is appropriate: fixing each one separately and verifying the fix before moving on reduces the chance of fixes interfering with each other and makes each change easier to review. The guidance for sending all issues in a single message applies when the issues interact and Claude needs full context to resolve them together. Option A is suited to interacting problems, not independent ones. Option C discards working code unnecessarily. Option D creates an arbitrary grouping not based on actual interaction.
 
 ---
@@ -785,7 +785,7 @@ B) Send the two interacting logic bugs in one message so Claude can resolve them
 C) Fix all naming violations first since they are simpler, then tackle the two logic bugs in a single message.
 D) Fix each of the eight issues in eight separate sequential messages, verifying each before proceeding.
 
-**Correct Answer: B**
+**Correct Answer: **
 The guidance for batching issues is based on whether they interact. The two logic bugs interact and Claude needs full context on both to resolve them correctly, so they should be reported together. The naming violations are independent and do not affect correctness, so sequential iteration is appropriate: fix each one and verify before moving to the next. Option A lumps all issues together, which adds noise when Claude is resolving the interacting bugs. Option C addresses ordering by complexity rather than by interaction. Option D applies sequential iteration to interacting bugs, which risks an incomplete fix.
 
 ---
@@ -797,7 +797,7 @@ B) Use the interview pattern: ask Claude to question you about the service's arc
 C) Provide the service's entry point files to Claude and ask it to generate a caching design document for review.
 D) Start with a minimal proof-of-concept cache for one endpoint and iterate by describing any failures encountered during testing.
 
-**Correct Answer: B**
+**Correct Answer: **
 The interview pattern is specifically designed for situations where the developer may not have anticipated all relevant design considerations. By asking Claude to question the developer about the service's patterns and constraints before implementing, it surfaces assumptions about lifecycle management, cache invalidation strategy, and dependency injection that the developer may not have known to specify upfront. Option A proceeds with generic patterns that may be incompatible with the unfamiliar service. Option C produces a design document but does not interactively surface considerations the developer has not yet thought of. Option D defers discovery to runtime failures rather than surfacing design issues before any code is written.
 
 ---
@@ -811,7 +811,7 @@ B) Set the environment variable `CLAUDE_HEADLESS=true` before running the comman
 C) Redirect stdin from `/dev/null`: `claude "Analyze this pull request for security issues" < /dev/null`
 D) Add the `--batch` flag: `claude --batch "Analyze this pull request for security issues"`
 
-**Correct Answer: A**
+**Correct Answer: **
 The `-p` (or `--print`) flag is the documented way to run Claude Code in non-interactive mode. Options B and D reference non-existent features. Option C is a Unix workaround that doesn't properly address Claude Code's command syntax.
 
 ---
@@ -823,7 +823,7 @@ B) Use `--output-format json` with `--json-schema` so that test suggestions are 
 C) Document in `CLAUDE.md` the testing standards, available fixtures, and instruct Claude to review existing test files before suggesting new scenarios.
 D) Add a post-processing script to the pipeline that compares Claude's suggestions against the existing test files and filters duplicates.
 
-**Correct Answer: C**
+**Correct Answer: **
 Providing existing test files in context and documenting testing standards in `CLAUDE.md` directly instructs Claude to avoid duplicate suggestions at generation time. This is the most efficient fix because it addresses the root cause: Claude does not know what tests already exist. Option A prevents interactive hangs but does not affect test content. Option B improves parseability but does not prevent duplicate suggestions. Option D is a workaround that adds pipeline complexity without fixing the underlying issue.
 
 ---
@@ -835,7 +835,7 @@ B) Use `--output-format json` combined with `--json-schema` to define a schema w
 C) Add a post-processing step that uses a second Claude call to normalize the first response into a consistent structured format.
 D) Switch from inline comments to a single summary comment, which is easier to extract since it does not require line-level parsing.
 
-**Correct Answer: B**
+**Correct Answer: **
 Using `--output-format json` with `--json-schema` produces structured output that conforms to the defined schema by construction, eliminating format drift entirely. The pipeline can parse the JSON directly without a regex layer. Option A makes prompt instructions more rigid but still relies on Claude maintaining format consistency across runs, which is the root cause of the breakage. Option C adds latency and cost by introducing a second API call for normalization. Option D changes the feature behavior to work around the parsing problem rather than solving it.
 
 ---
@@ -851,7 +851,7 @@ B) Temporarily disable the security category and add explicit criteria defining 
 C) Increase the review model to a larger tier to improve its judgment on security issues.
 D) Add a post-processing confidence threshold: discard any finding where Claude rates its own confidence below 80%.
 
-**Correct Answer: B**
+**Correct Answer: **
 General instructions like "only report high-confidence findings" fail to reduce false positives because they do not define what counts as a positive. Temporarily disabling the noisy category restores developer trust immediately while explicit criteria with examples give Claude the specificity needed to distinguish real issues from acceptable patterns. Option A abandons the AI-based review entirely rather than fixing it. Option C is unlikely to change false positive rates when the root cause is imprecise criteria. Option D relies on self-reported confidence scores, which are poorly calibrated for LLMs.
 
 ---
@@ -863,7 +863,7 @@ B) Define explicit criteria: flag numeric literals that appear in business logic
 C) Add a severity field to findings and instruct Claude to omit any finding with severity "low."
 D) Provide a list of allowed numeric values that should never be flagged.
 
-**Correct Answer: B**
+**Correct Answer: **
 Explicit, specific criteria that define what to report and what to exclude are far more effective than general guidance or exclusion lists. Describing the precise conditions that make a number "magic" gives Claude a clear decision rule rather than requiring inference. Option A is the kind of vague instruction that causes the problem in the first place. Option C introduces a severity layer that does not address the underlying definitional problem. Option D would require maintaining an incomplete and fragile list that does not generalize to new values.
 
 ---
@@ -875,7 +875,7 @@ B) Define explicit documentation criteria: public API functions must have a docs
 C) Run three parallel review instances and accept feedback that appears in at least two of the three.
 D) Restrict the review prompt to only one concern at a time, alternating between security, documentation, and style in separate runs.
 
-**Correct Answer: B**
+**Correct Answer: **
 Explicit criteria that specify exactly what is required, for which functions, and at what level of detail eliminate the ambiguity that causes inconsistency. Without a clear definition of "documented," Claude must infer the threshold each time, leading to variable results. Option A is the type of general instruction that already produces the problem. Option C adds overhead and suppresses legitimate feedback that may only appear in one instance. Option D separates concerns but does not fix the definition of what counts as adequate documentation.
 
 ---
@@ -889,7 +889,7 @@ B) Provide 2-4 few-shot examples in the prompt showing the exact desired output 
 C) Use `--output-format json` and parse the results in a post-processing step to normalize format.
 D) Ask Claude to self-review its output and reformat any comment that does not match the required structure.
 
-**Correct Answer: B**
+**Correct Answer: **
 Few-shot examples demonstrating the exact desired output format are the most effective technique for achieving consistently formatted output when detailed instructions alone produce inconsistent results. Seeing concrete examples of the format makes the requirement unambiguous. Option A is a format specification that has likely already been tried given the problem description. Option C introduces parsing complexity and does not ensure consistent generation. Option D adds a round-trip that may still produce inconsistent intermediate output.
 
 ---
@@ -901,7 +901,7 @@ B) Create targeted few-shot examples that specifically demonstrate ambiguous-cas
 C) Switch from classification to extraction: ask Claude to extract the clause text without categorizing it, then apply a rule-based classifier.
 D) Add a confidence score field and route all low-confidence classifications to human review without attempting to improve the model's judgment.
 
-**Correct Answer: B**
+**Correct Answer: **
 Targeted few-shot examples for ambiguous scenarios that show the reasoning behind the classification decision are the most effective technique for improving handling of edge cases. Standard examples do not teach the model how to handle cases that span category boundaries. Option A reinforces behavior that already works rather than addressing the gap. Option C sidesteps the classification problem rather than solving it. Option D is a reasonable operational safeguard but does not improve model accuracy.
 
 ---
@@ -913,7 +913,7 @@ B) Add few-shot examples specifically showing correct extraction from prose-form
 C) Pre-process all documents to convert prose financial data into table format before sending to Claude.
 D) Use a separate prompt for prose documents that instructs Claude to first identify all sentences containing numbers, then extract figures from those sentences only.
 
-**Correct Answer: B**
+**Correct Answer: **
 Few-shot examples demonstrating correct extraction from documents with varied formats directly address the accuracy gap on prose documents. The model already generalizes well to tabular data; the gap is in prose, and targeted examples for that format close the gap most efficiently. Option A relies on emphasis, which does not resolve structural pattern differences. Option C requires reliable pre-processing of arbitrarily structured prose, which is non-trivial. Option D adds complexity and may miss numbers that are discussed without appearing in sentences Claude isolates.
 
 ---
@@ -927,7 +927,7 @@ B) Switch to tool use with a defined JSON schema as the input parameter; extract
 C) Add an instruction to the prompt: "Your response must be valid JSON. Double-check for syntax errors before responding."
 D) Use a regex post-processor to fix the most common syntax errors before passing output to the parser.
 
-**Correct Answer: B**
+**Correct Answer: **
 Tool use with a JSON schema guarantees schema-compliant structured output by construction, eliminating syntax errors entirely. The model populates the tool call's input parameters according to the schema rather than generating free-text JSON. Option A reduces the frequency of failures but does not eliminate syntax errors. Option C relies on model self-checking, which does not provide the deterministic guarantee that tool use provides. Option D is a fragile workaround that cannot handle all syntax error patterns.
 
 ---
@@ -939,7 +939,7 @@ B) Set `tool_choice: {"type": "tool", "name": "extract_invoice_schema"}` to alwa
 C) Add a system prompt instruction: "Always call one of the extraction tools and never return text."
 D) Merge both schemas into a single `extract_document_schema` tool with an optional `document_type` field.
 
-**Correct Answer: A**
+**Correct Answer: **
 `tool_choice: "any"` guarantees the model calls a tool rather than returning conversational text, without requiring you to specify which tool. This is exactly the documented use case when you have multiple valid tools and want to ensure one is called. Option B forces a specific tool, which defeats the purpose when you do not know the document type in advance. Option C is a prompt-based approach with probabilistic compliance, which already failed as evidenced by the 30% text response rate. Option D is a valid architectural change but requires more engineering effort than a single configuration change.
 
 ---
@@ -953,7 +953,7 @@ B) On failure, append the original document, the failed extraction, and the spec
 C) Flag all invoices with this error as missing data and route them directly to human review without retry.
 D) Add a `calculated_total` field to the schema and populate it with the sum of line items in post-processing, then use the calculated total as the canonical value.
 
-**Correct Answer: B**
+**Correct Answer: **
 Retry-with-error-feedback works by giving the model the specific discrepancy it needs to self-correct. Since the invoices are well-formed and the data is present, the model has the information it needs to fix the arithmetic alignment on retry. Option A retries without feedback and is unlikely to improve results since the model will reproduce the same error. Option C routes to human review prematurely when a retry with feedback could resolve the issue. Option D silently replaces the model's extracted total with a calculated value, which could propagate errors if the line items themselves were extracted incorrectly.
 
 ---
@@ -965,7 +965,7 @@ B) Add a `detected_pattern` field to each finding that records the specific code
 C) Add a `category` field so findings can be grouped by issue type for aggregate analysis.
 D) Add an `is_false_positive` boolean field and instruct Claude to self-label its own false positives.
 
-**Correct Answer: B**
+**Correct Answer: **
 The `detected_pattern` field directly captures what code construct triggered each finding, enabling the team to identify which patterns produce the most false positives and update prompt criteria accordingly. Option A provides confidence scores but does not identify what prompted the finding. Option C allows grouping but not pattern-level debugging. Option D asks Claude to self-identify its own false positives, which is unreliable since the model cannot accurately distinguish true from false positives without ground truth.
 
 ---
@@ -977,7 +977,7 @@ B) Check whether the guarantor address is actually present in the loan summary d
 C) Switch to a larger model tier for the retry attempts, since the current model may lack the reasoning capacity for this field.
 D) Restructure the schema to make the guarantor address field optional, allowing the pipeline to proceed when the field cannot be extracted.
 
-**Correct Answer: B**
+**Correct Answer: **
 Retries are only effective when the information needed to satisfy the validation is present in the document. A loan summary that references guarantor details in an external exhibit does not contain the address. No number of retries will extract information that is not in the input. Before adding retry cycles, validate that the target field is actually present in the source document. Option A adds more retries without diagnosing why the existing retries are failing. Option C may improve performance on difficult extractions but does not address absence of data. Option D removes the validation rather than diagnosing the root cause.
 
 ---
@@ -991,7 +991,7 @@ B) Switch both workflows to batch processing with status polling to check for co
 C) Keep real-time calls for both workflows to avoid batch result ordering issues.
 D) Switch both to batch processing with a timeout fallback to real-time if batches take too long.
 
-**Correct Answer: A**
+**Correct Answer: **
 The Message Batches API has up to 24-hour processing times with no guaranteed latency SLA. This makes it unsuitable for blocking pre-merge checks but ideal for overnight batch jobs. Option B is wrong because relying on "often faster" completion isn't acceptable for blocking workflows. Option C reflects a misconception: batch results can be correlated using `custom_id` fields.
 
 ---
@@ -1003,7 +1003,7 @@ B) Use the `custom_id` field to correlate each request with its response, identi
 C) Set a shorter processing window timeout to force faster completion and reduce the risk of partial failures.
 D) Switch to real-time API calls with retry logic; the batch API is not suitable for mission-critical compliance workloads.
 
-**Correct Answer: B**
+**Correct Answer: **
 The `custom_id` field is specifically designed for correlating batch request and response pairs, enabling teams to identify which documents failed and resubmit only those, avoiding the cost of reprocessing the entire batch. Option A wastes 50% cost savings by reprocessing successful documents. Option C misunderstands the batch API; processing windows are managed by Anthropic and cannot be shortened on demand. Option D is overly conservative: the batch API is appropriate for non-blocking, latency-tolerant compliance audits, which this workflow is.
 
 ---
@@ -1017,7 +1017,7 @@ B) Require developers to split large PRs into smaller submissions of 3-4 files b
 C) Switch to a higher-tier model with a larger context window to give all 14 files adequate attention in one pass.
 D) Run three independent review passes on the full PR and only flag issues that appear in at least two of the three runs.
 
-**Correct Answer: A**
+**Correct Answer: **
 Splitting reviews into focused passes directly addresses attention dilution. Option B shifts burden to developers without improving the system. Option C misunderstands that larger context windows don't solve attention quality issues. Option D would suppress detection of real bugs by requiring consensus on issues that may only be caught intermittently.
 
 ---
@@ -1029,7 +1029,7 @@ B) The reviewing instance retains reasoning context from generation, making it l
 C) The review prompt was too vague; adding more explicit review criteria to the same session would catch the missed errors.
 D) The model tier used for generation is more capable than the one used for review; switching both to the same tier resolves the quality gap.
 
-**Correct Answer: B**
+**Correct Answer: **
 Self-review limitation is a known pattern: when a model retains the reasoning context from code generation, it is less likely to identify errors in its own output. An independent review instance without the generator's context approaches the code without prior assumptions and catches issues the generating instance would overlook. Option A addresses context length, not reasoning context bias. Option C might improve detection of certain categories of issues but does not address the fundamental self-review limitation. Option D addresses model selection, not the structural problem of reviewing one's own output.
 
 ---
@@ -1041,7 +1041,7 @@ B) Use a second independent Claude instance without the generation context to pe
 C) Run the review immediately after generation before any other tool calls accumulate in the context window.
 D) Switch to a larger model tier for the review step to improve reasoning quality.
 
-**Correct Answer: B**
+**Correct Answer: **
 When a model reviews code it generated in the same session, it retains the reasoning context from generation and is less likely to identify errors in its own output. An independent review instance approaches the code without prior assumptions and catches issues the generating instance overlooks. This is the documented rationale for multi-instance review architectures. Option A improves the review prompt but does not address the fundamental self-review limitation. Option C manages context length but does not remove the generator's retained reasoning bias. Option D improves general capability but does not change the structural problem of a model reviewing its own work.
 
 ---
@@ -1057,7 +1057,7 @@ B) Extract transactional facts (amounts, dates, order numbers, statuses) into a 
 C) Increase the model's context window by switching to a larger tier to retain the full conversation without summarization.
 D) Instruct the agent to re-read the full conversation history before each response.
 
-**Correct Answer: B**
+**Correct Answer: **
 Extracting precise transactional facts into a persistent "case facts" block ensures that specific numerical values, dates, and customer-stated details are explicitly available in every prompt turn rather than buried in growing conversation history. Progressive summarization risks condensing these details into vague references like "overcharge from last month." Option A's compaction is useful for context length management but can lose precision on transactional facts. Option C does not prevent progressive summarization and is not a reliable solution. Option D is not practical for long conversations and still does not prevent facts from being lost as context grows.
 
 ---
@@ -1069,7 +1069,7 @@ B) The synthesis agent is hitting its output token limit; increase `max_tokens` 
 C) The "lost in the middle" effect causes models to reliably process content at the beginning and end of long inputs but miss middle sections. Mitigate by placing key findings summaries at the beginning of aggregated inputs and organizing sections with explicit headers.
 D) The synthesis agent's context window is exhausted; route some subagent outputs through a secondary summarization agent before passing to synthesis.
 
-**Correct Answer: C**
+**Correct Answer: **
 The "lost in the middle" effect is a well-documented limitation where models attend less reliably to content in the middle of long inputs. Placing key findings at the beginning and using explicit section headers to organize the aggregated input significantly mitigates this effect. Option A addresses data consistency but not the positional attention problem. Option B addresses output length, not input attention. Option D adds pipeline complexity and may help with context length, but does not address the positional attention issue on its own.
 
 ---
@@ -1083,7 +1083,7 @@ B) Have the agent self-report a confidence score (1-10) before each response and
 C) Deploy a separate classifier model trained on historical tickets to predict which requests need escalation before the main agent begins processing.
 D) Implement sentiment analysis to detect customer frustration levels and automatically escalate when negative sentiment exceeds a threshold.
 
-**Correct Answer: A**
+**Correct Answer: **
 Adding explicit escalation criteria with few-shot examples directly addresses the root cause: unclear decision boundaries. Option B fails because LLM self-reported confidence is poorly calibrated. Option C is over-engineered. Option D solves a different problem entirely.
 
 ---
@@ -1095,7 +1095,7 @@ B) The agent should detect negative sentiment and escalate once the frustration 
 C) The agent should complete its investigation, present the proposed solution, and escalate only if the customer still insists afterward.
 D) The agent should apologize for the wait, then proceed with automated resolution since the case is within its capability.
 
-**Correct Answer: A**
+**Correct Answer: **
 When a customer explicitly requests a human agent, that request must be honored immediately regardless of whether the agent believes it can resolve the issue. Proceeding with investigation after a clear escalation request violates the design principle documented in Task 5.2. Option B introduces sentiment scoring as a proxy, but the customer has already expressed an explicit preference. Sentiment analysis is irrelevant here. Option C delays honoring the request while investigation proceeds, which further frustrates the customer. Option D is the agent's current incorrect behavior: capability is not the deciding factor when a customer has made an explicit request.
 
 ---
@@ -1109,7 +1109,7 @@ B) The synthesis agent should be responsible for detecting empty sections and re
 C) The coordinator should always validate that each subagent returned non-empty results before proceeding to synthesis.
 D) The timeout threshold should be increased so that the subagent does not time out before returning real results.
 
-**Correct Answer: A**
+**Correct Answer: **
 Silently suppressing errors by returning empty results as success is an explicitly documented anti-pattern. It removes the coordinator's ability to recover, retry, or annotate output with coverage gaps. Option B incorrectly shifts the recovery responsibility to the synthesis agent, which lacks the tools and context to re-run searches. Option C adds coordinator-level validation as a safeguard, but it does not address the root cause: the subagent is misrepresenting failure as success. Option D addresses the symptom (timeout threshold) rather than the error propagation design flaw.
 
 ---
@@ -1123,7 +1123,7 @@ B) Context degradation: as the session grows, specific findings from early in th
 C) The legacy codebase's file structure is too complex for a single agent; break it into independent subsystems and run separate agents on each subsystem simultaneously.
 D) The agent is using the wrong tools; switching from `Read` to `Grep` for file exploration would reduce context consumption.
 
-**Correct Answer: B**
+**Correct Answer: **
 Context degradation in extended sessions is a known pattern: models start giving inconsistent answers and referencing general knowledge rather than specific findings discovered earlier. Having the agent maintain a scratchpad file that records key findings creates a persistent, explicit record that can be referenced and included in subsequent prompts, preventing specific details from being lost to context pressure. Option A misidentifies the cause as a rate limit. Option C adds parallelism but does not address the single-session degradation problem. Option D changes tooling but does not address context growth or degradation.
 
 ---
@@ -1135,7 +1135,7 @@ B) Use `/compact` before starting the second phase to free up context space and 
 C) Restart the session with a fresh context at the start of each phase, passing a manual summary of what you found.
 D) Increase the `max_tokens` parameter so the model can hold more context without compressing earlier findings.
 
-**Correct Answer: A**
+**Correct Answer: **
 Scratchpad files are the recommended technique for persisting key findings across context boundaries when context degradation becomes apparent. The agent can write structured notes during exploration and read them back at phase boundaries, ensuring critical findings, like the custom token signing implementation, are not lost to context compression. Option B uses `/compact` to free up space, but this compresses conversation history and may lose the specific finding about the custom token signing. Option C is a valid but costly approach: restarting sessions loses the accumulated understanding and requires manual intervention. Option D is incorrect because `max_tokens` controls output length, not context window size, and would not prevent the degradation.
 
 ---
@@ -1149,7 +1149,7 @@ B) Aggregate accuracy metrics can mask poor performance on specific document typ
 C) The validation set may not be representative of production data volumes, so the 97% figure cannot be trusted.
 D) Human review should always be retained regardless of accuracy metrics because automation of insurance decisions creates regulatory risk.
 
-**Correct Answer: B**
+**Correct Answer: **
 The core risk is that aggregate metrics can hide poor performance on specific segments. A document type with 85% accuracy on a critical field like `claim_amount` would be masked by strong performance across other document types. Before automating, accuracy should be validated by document type and field segment to confirm consistent performance across all dimensions. Option A is a valid concern but describes the error rate, not the masking risk. Option C raises a data quality concern but is not the most important concern about the specific 97% figure. Option D makes a policy argument that does not engage with the analytical gap identified.
 
 ---
@@ -1161,7 +1161,7 @@ B) Model confidence scores must be calibrated against a labeled validation set t
 C) Confidence scores only work when the model outputs a single extraction; multi-field documents require a different approach.
 D) Routing on confidence scores creates two separate code paths that are harder to maintain than a single uniform review workflow.
 
-**Correct Answer: B**
+**Correct Answer: **
 A model's raw confidence scores need calibration: without comparing stated confidence against actual correctness on a labeled validation set, there is no reliable mapping between a score of "0.85" and an acceptable error rate. Calibrating the threshold ensures that the routing cut-off corresponds to a known accuracy level. Option A is a minor operational concern, not a critical flaw. Option C is incorrect; confidence scores can be applied at the field level for multi-field documents. Option D is an engineering tradeoff, not a flaw in the confidence approach itself.
 
 ---
@@ -1175,7 +1175,7 @@ B) Require subagents to output structured claim-source mappings (claim text, sou
 C) Store all raw subagent outputs in a separate log file so they can be consulted if a claim needs verification.
 D) Add a post-synthesis review step where a separate agent checks each claim in the report against the raw subagent outputs.
 
-**Correct Answer: B**
+**Correct Answer: **
 The root cause of provenance loss is that summarization steps compress findings without preserving claim-to-source mappings. Requiring subagents to output structured mappings and instructing the synthesis agent to preserve and merge them ensures that each claim in the final report carries its source attribution through the pipeline. Option A produces a list of sources consulted but does not link individual claims to specific sources. Option C stores raw data as a fallback but does not integrate provenance into the report itself. Option D adds a verification step after the fact but does not prevent the structural provenance loss.
 
 ---
