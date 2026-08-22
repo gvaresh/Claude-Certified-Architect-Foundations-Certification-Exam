@@ -138,7 +138,7 @@ You are building a structured data extraction system using Claude. The system ex
 
 **Q1.** Production data shows that in 12% of cases, your agent skips `get_customer` entirely and calls `lookup_order` using only the customer's stated name, occasionally leading to misidentified accounts and incorrect refunds. What change would most effectively address this reliability issue?
 
-A) Add a programmatic prerequisite that blocks `lookup_order` and `process_refund` calls until `get_customer` has returned a verified customer ID.
+**A) Add a programmatic prerequisite that blocks `lookup_order` and `process_refund` calls until `get_customer` has returned a verified customer ID.**
 B) Enhance the system prompt to state that customer verification via `get_customer` is mandatory before any order operations.
 C) Add few-shot examples showing the agent always calling `get_customer` first, even when customers volunteer order details.
 D) Implement a routing classifier that analyzes each request and enables only the subset of tools appropriate for that request type.
@@ -153,7 +153,7 @@ When a specific tool sequence is required for critical business logic, programma
 What is the primary problem with this loop termination approach?
 
 A) The agent will never terminate because `process_refund` always returns a success message that prevents "I have completed" from appearing.
-B) Relying on natural language signals in the assistant's text is unreliable; the correct approach is to inspect `stop_reason` and only terminate when it equals `"end_turn"`.
+**B) Relying on natural language signals in the assistant's text is unreliable; the correct approach is to inspect `stop_reason` and only terminate when it equals `"end_turn"`.**
 C) The loop should terminate as soon as any tool call fails, since continuing after a failure will corrupt the conversation history.
 D) Checking response text is only valid in synchronous mode; you must use a callback handler for proper loop control in async contexts.
 
@@ -167,7 +167,7 @@ Inspecting `stop_reason` is the canonical method for agentic loop control: conti
 What is the correct characterization of this design?
 
 A) Iteration caps are the recommended primary stopping mechanism because they prevent runaway costs in production.
-B) Iteration caps are a reasonable safety boundary for long-running tasks but should not be the primary termination mechanism; `stop_reason: "end_turn"` remains the authoritative signal.
+**B) Iteration caps are a reasonable safety boundary for long-running tasks but should not be the primary termination mechanism; `stop_reason: "end_turn"` remains the authoritative signal.**
 C) The iteration cap should be replaced with a time-based timeout, since token counts are a more reliable measure of completion than iteration count.
 D) Iteration caps are unnecessary if the system prompt instructs the agent to always request only the minimum tools needed.
 
@@ -181,7 +181,7 @@ The agentic loop should terminate primarily when `stop_reason` equals `"end_turn
 Under what condition would this change most likely degrade agent performance?
 
 A) When the tool results contain binary data such as images or file attachments.
-B) When the model needs to reason across multiple tool results simultaneously to determine its next action, since summaries may omit details required for that reasoning.
+**B) When the model needs to reason across multiple tool results simultaneously to determine its next action, since summaries may omit details required for that reasoning.**
 C) When the number of tool calls per session exceeds 10, since larger histories slow down the API.
 D) When tools return results faster than 200ms, making history appending redundant.
 
@@ -194,7 +194,7 @@ The agentic loop depends on tool results being present in conversation history s
 
 **Q7.** After running on "impact of AI on creative industries," each subagent completes successfully but the final reports cover only visual arts, missing music, writing, and film production. The coordinator decomposed the topic into: "AI in digital art creation," "AI in graphic design," and "AI in photography." What is the most likely root cause?
 
-A) The synthesis agent lacks instructions for identifying coverage gaps in the findings it receives from other agents.
+**A) The synthesis agent lacks instructions for identifying coverage gaps in the findings it receives from other agents.**
 B) The coordinator agent's task decomposition is too narrow, resulting in subagent assignments that don't cover all relevant domains.
 C) The web search agent's queries are not comprehensive enough and need to be expanded to cover more creative industry sectors.
 D) The document analysis agent is filtering out sources related to non-visual creative industries due to overly restrictive relevance criteria.
@@ -210,7 +210,7 @@ What design change most directly addresses this?
 
 A) Replace the coordinator with a static routing table that maps query keywords to specific subagent pipelines.
 B) Have each subagent evaluate its own relevance to the current query and self-select into or out of the pipeline.
-C) Design the coordinator to dynamically select which subagents to invoke based on query complexity and type, rather than always routing through the full pipeline.
+**C) Design the coordinator to dynamically select which subagents to invoke based on query complexity and type, rather than always routing through the full pipeline.**
 D) Reduce the number of subagents from four to two by merging web search and document analysis into a single "retrieval" agent.
 
 **Correct Answer: **
@@ -223,7 +223,7 @@ A coordinator that always runs the full pipeline regardless of query complexity 
 What is the correct approach for re-delegating this work?
 
 A) Invoke the synthesis agent with the partial findings and instruct it to infer what the missing sources likely contain based on patterns from the three completed analyses.
-B) The coordinator should re-invoke the document analysis subagent with an explicit prompt specifying only the two missing sources, including the previously completed findings as context.
+**B) The coordinator should re-invoke the document analysis subagent with an explicit prompt specifying only the two missing sources, including the previously completed findings as context.**
 C) Send all five sources again to a new document analysis subagent instance, which will re-analyze the three already-completed sources along with the two missing ones.
 D) Let the coordinator generate its own analysis of the remaining two sources directly, rather than spawning another subagent delegation.
 
@@ -239,7 +239,7 @@ The coordinator's role includes evaluating output for gaps and re-delegating tar
 What is the most likely cause of the failure?
 
 A) The `Task` tool requires an explicit `subagent_endpoint` configuration before it can be invoked.
-B) `"Task"` is not included in the coordinator's `allowedTools`, so it cannot spawn subagents.
+**B) `"Task"` is not included in the coordinator's `allowedTools`, so it cannot spawn subagents.**
 C) The coordinator's system prompt does not include instructions to use the `Task` tool, so the model never attempts to call it.
 D) Subagent invocation requires the coordinator to be running in plan mode rather than direct execution mode.
 
@@ -253,7 +253,7 @@ The `Task` tool is the mechanism for spawning subagents in the Claude Agent SDK.
 What is the correct fix during context passing from the web search subagent to the synthesis agent?
 
 A) Instruct the synthesis agent to run its own web searches to re-locate the original sources.
-B) Use structured data formats that separate claim content from metadata (source URLs, publication dates, page numbers) in the subagent's output, and include this structure when passing context to the synthesis agent.
+**B) Use structured data formats that separate claim content from metadata (source URLs, publication dates, page numbers) in the subagent's output, and include this structure when passing context to the synthesis agent.**
 C) Have the coordinator concatenate all subagent outputs into a single text block before forwarding to synthesis, since synthesis will extract citations naturally.
 D) Configure the web search subagent to return only source URLs, and have the synthesis agent re-read each source to reconstruct the findings.
 
@@ -265,7 +265,7 @@ Structured data formats that separate content from metadata ensure that claim-so
 **Q20.** A coordinator needs to research three independent subtopics in parallel: market trends, competitor analysis, and regulatory environment. Each requires a separate web search subagent. How should the coordinator spawn these subagents to maximize throughput?
 
 A) Spawn the subtopics sequentially: start the first subagent, wait for its result, then start the second, and so on, to avoid context conflicts.
-B) Emit all three `Task` tool calls in a single coordinator response, which allows the subagents to run in parallel.
+**B) Emit all three `Task` tool calls in a single coordinator response, which allows the subagents to run in parallel.**
 C) Route all three subtopics through a single subagent sequentially, sharing context between them to reduce total memory usage.
 D) Use a single subagent with three separate prompts in sequence, passing prior results as context for each subsequent prompt.
 
@@ -282,7 +282,7 @@ A colleague suggests adding a system prompt instruction: "Always verify identity
 
 A) The system prompt instruction is sufficient because it explicitly describes the required order.
 B) Add few-shot examples showing the correct three-step sequence alongside the system prompt instruction.
-C) Implement a programmatic prerequisite that blocks `close_account` from executing until `get_customer` has returned a verified customer ID.
+**C) Implement a programmatic prerequisite that blocks `close_account` from executing until `get_customer` has returned a verified customer ID.**
 D) Add a routing classifier that analyzes the request type and pre-selects the appropriate tools before the agent begins.
 
 **Correct Answer: **
@@ -295,10 +295,9 @@ When a tool ordering requirement has serious consequences (unauthorized account 
 What design change would most improve efficiency while maintaining accuracy?
 
 A) Instruct the agent to address only the highest-priority issue per conversation turn and ask the customer to submit separate tickets for the remaining issues.
-B) Decompose the three concerns into distinct investigation items and process each in parallel using shared customer context, then compile a unified response.
+**B) Decompose the three concerns into distinct investigation items and process each in parallel using shared customer context, then compile a unified response.**
 C) Process the three issues sequentially but cache intermediate results so subsequent issues benefit from data already retrieved.
 D) Delegate all three issues to a single specialized "multi-issue" subagent that handles complex requests with multiple concerns.
-
 **Correct Answer: **
 When a customer presents multiple independent concerns, decomposing them into parallel investigation items dramatically reduces latency. Each concern can be investigated simultaneously using the shared customer context already retrieved. Option A creates a poor customer experience and extra work for the customer. Option C improves caching but does not eliminate the serial bottleneck. Option D creates an undifferentiated subagent that doesn't reflect the coordinator-subagent specialization pattern.
 
@@ -312,7 +311,7 @@ What is the most appropriate architectural fix?
 
 A) Update each backend system to return a uniform date and status format before the agent calls them.
 B) Add format conversion instructions to the system prompt explaining how to interpret each tool's output conventions.
-C) Implement `PostToolUse` hooks that intercept tool results from each source and normalize timestamps, dates, and status codes into a consistent format before the model processes them.
+**C) Implement `PostToolUse` hooks that intercept tool results from each source and normalize timestamps, dates, and status codes into a consistent format before the model processes them.**
 D) Add a post-processing step after the agent produces its final response to re-format any dates and statuses that appear in the output.
 
 **Correct Answer: **
@@ -326,7 +325,7 @@ What is the most effective way to guarantee compliance?
 
 A) Strengthen the system prompt language: "You are strictly forbidden from processing refunds above $500 without explicit manager approval under any circumstances."
 B) Add 10 few-shot examples in the system prompt, all demonstrating the agent requesting manager approval for high-value refunds.
-C) Implement a hook that intercepts outgoing `process_refund` tool calls, checks the refund amount, and blocks execution or redirects to the manager approval workflow when the amount exceeds $500.
+**C) Implement a hook that intercepts outgoing `process_refund` tool calls, checks the refund amount, and blocks execution or redirects to the manager approval workflow when the amount exceeds $500.**
 D) Implement a validation step that runs after `process_refund` completes and reverses any refunds that exceeded the threshold.
 
 **Correct Answer: **
@@ -339,7 +338,7 @@ Business rules that require guaranteed compliance must be enforced programmatica
 What change would most effectively reduce unnecessary context consumption from tool results?
 
 A) Disable the `PostToolUse` hook entirely and let the model process raw Bash output directly.
-B) Modify the hook to return only the formatted summary to the model, trimming the verbose raw output rather than preserving it alongside the summary.
+**B) Modify the hook to return only the formatted summary to the model, trimming the verbose raw output rather than preserving it alongside the summary.**
 C) Increase the model's `max_tokens` parameter to accommodate the additional context from both raw and formatted output.
 D) Switch from `PostToolUse` hooks to pre-processing the Bash commands themselves to produce shorter output.
 
@@ -355,7 +354,7 @@ D) Switch from `PostToolUse` hooks to pre-processing the Bash commands themselve
 Which decomposition strategy is most appropriate?
 
 A) Dynamic adaptive decomposition: have the agent start by scanning the full PR and generate a review plan based on what it finds.
-B) Prompt chaining with sequential focused passes: one pass per review aspect (security, style, performance), each with dedicated criteria.
+**B) Prompt chaining with sequential focused passes: one pass per review aspect (security, style, performance), each with dedicated criteria.**
 C) A single comprehensive pass that examines all three aspects simultaneously to capture cross-cutting concerns.
 D) Spawn three fully independent agents without shared context, then merge their outputs in a final aggregation step.
 
