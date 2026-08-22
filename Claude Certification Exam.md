@@ -368,7 +368,7 @@ When a workflow has predictable, well-defined aspects that must each be covered,
 Which decomposition approach is most appropriate?
 
 A) Prompt chaining: design a fixed sequence of investigation steps (check logs, read configs, trace service calls) that the agent executes in order.
-B) Dynamic adaptive decomposition: the agent first maps the affected services and symptom timeline, then generates and prioritizes investigation subtasks based on what is discovered at each step.
+**B) Dynamic adaptive decomposition: the agent first maps the affected services and symptom timeline, then generates and prioritizes investigation subtasks based on what is discovered at each step.**
 C) Split the investigation between two agents: one agent reads logs while the other reads source code, and they report findings independently to a human operator.
 D) Have the agent run a comprehensive search of all changed files in the past two weeks and produce a ranked list of candidates for manual review.
 
@@ -383,7 +383,7 @@ Open-ended investigation tasks with unknown scope require dynamic adaptive decom
 
 What is the most reliable approach for resuming the investigation productively the next day?
 
-A) Resume the named session with `--resume <session-name>` and notify the agent about the specific files that were changed, so it can re-analyze those files in the context of its prior understanding.
+**A) Resume the named session with `--resume <session-name>` and notify the agent about the specific files that were changed, so it can re-analyze those files in the context of its prior understanding.**
 B) Start a completely new session each time, since stale tool results from the previous session make resumption unreliable for any scenario.
 C) Resume the named session without any notification about file changes; the agent will detect modifications automatically when it next reads those files.
 D) Use `fork_session` to create a branch of the current session before stepping away, then resume from the fork the next day.
