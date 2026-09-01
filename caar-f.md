@@ -6,7 +6,7 @@ Your agent has analyzed a complex service module—reading 23 source files, trac
 
 A. Start two fresh sessions, having each re-read the relevant source files before beginning. 
 
-B. Resume the analysis session with fork, creating a separate branch for each testing strategy. 
+**B. Resume the analysis session with fork, creating a separate branch for each testing strategy.** 
 
 C. Continue in the original session, developing end-to-end tests first, then snapshot tests sequentially. 
 
@@ -20,7 +20,7 @@ A. Switch to using Grep to search for specific function names instead of reading
 
 B. Document all current findings in a summary report, clear context completely, then restart the exploration. 
 
-C. Spawn subagents to investigate specific questions (e.g., final test files for payment processing), while a                                                                                             coordinating agent coordinates findings and preserves high-level understanding. 
+**C. Spawn subagents to investigate specific questions (e.g., final test files for payment processing), while a                                                                                             coordinating agent coordinates findings and preserves high-level understanding.** 
 
 D. Clear context with /clear, then selectively re-read only the most critical files discovered so far, relying on memory between context requests. 
 
@@ -34,7 +34,7 @@ B. Use Glob to find files in directories commonly associated with error handling
 
 C. Use Grep to find all files that import the project’s error handling module, then read those files to look for similar error definitions. 
 
-D. Use Grep to search for distinctive text from the error message (like "SYNC_CONFLICT" or "version mismatch"), then inspect the matching files to understand context. 
+**D. Use Grep to search for distinctive text from the error message (like "SYNC_CONFLICT" or "version mismatch"), then inspect the matching files to understand context.** 
 
 Question 4 
 
@@ -48,7 +48,7 @@ B. Consolidate all three servers into a unified MCP server with cross-referencin
 
 C. Add a separate investigation tool to each server that accepts a natural language question and returns relevant content summaries. 
 
-D. Expose each server’s content catalog as MCP resources—issue summaries, documentation hierarchies, database schemas. 
+**D. Expose each server’s content catalog as MCP resources—issue summaries, documentation hierarchies, database schemas.** 
 
 Question 5 
 
@@ -60,7 +60,7 @@ B. Launch parallel subagents to explore different services simultaneously, then 
 
 C. Read all files containing “auth”, “login”, “permission”, or “token” in their content or filename. 
 
-D. Use Grep to find authentication entry points, read those files, then follow imports and function calls from the auth flow toward identity services. 
+**D. Use Grep to find authentication entry points, read those files, then follow imports and function calls from the auth flow toward identity services.** 
 
 ⸻ 
 
@@ -70,7 +70,7 @@ After adding an MCP server with specialized code refactoring tools (extract_func
 
 What’s the most effective way to improve adoption of the MCP refactoring tools? 
 
-A. Enhance the MCP tool descriptions to explain when each tool is preferable to text manipulation and clarify expected inputs and outputs. 
+**A. Enhance the MCP tool descriptions to explain when each tool is preferable to text manipulation and clarify expected inputs and outputs.** 
 
 B. Remove the Write tool from the agent’s configuration for refactoring sessions so it must use the MCP tools. 
 
@@ -84,7 +84,7 @@ Question 7
 
 You’ve configured your Claude agent with three MCP servers: one for Git operations, one for Jira ticket management, and one for documentation search. When a user asks the agent to “create a branch for JIRA-123 and add documentation links to the ticket,” how does the agent access tools across these servers? 
 
-A. Tools from all configured MCP servers are discovered at connection time and available simultaneously to the agent. 
+**A. Tools from all configured MCP servers are discovered at connection time and available simultaneously to the agent.** 
 
 B. The agent automatically selects the most relevant server based on the request and adds only that server’s tools. 
 
@@ -98,7 +98,7 @@ Question 8
 
 An engineer asks the agent to find all files in the monorepo that import the @company/auth package to understand how authentication is used across services. Which built-in tool is most appropriate for this task? 
 
-A. Grep, to search for the import statement pattern across file contents. 
+**A. Grep, to search for the import statement pattern across file contents.**
 
 B. Bash, to execute find . -type d -name "auth" and explore matching directories. 
 
@@ -114,7 +114,7 @@ Engineers frequently ask the agent to cross-reference code changes with Jira tic
 
 A. Use the Bash tool with curl to call Jira’s REST API, including authentication headers and parsing JSON responses inline. 
 
-B. Integrate an existing Jira MCP server that exposes tickets, comments, and metadata through discoverable MCP interfaces. 
+**B. Integrate an existing Jira MCP server that exposes tickets, comments, and metadata through discoverable MCP interfaces.** 
 
 C. Build a custom MCP server wrapping Jira’s API with tools designed specifically for this team’s code review workflow. 
 
@@ -134,7 +134,7 @@ B. Routing — classify each PR by type (feature, bugfix, refactor) first, then 
 
 C. Single comprehensive prompt — include all instructions in one prompt and let the model handle all three aspects simultaneously. 
 
-D. Prompt chaining — break the review into sequential steps where each aspect (style, security, documentation) is analyzed separately and combined in a final synthesis step. 
+**D. Prompt chaining — break the review into sequential steps where each aspect (style, security, documentation) is analyzed separately and combined in a final synthesis step.** 
 
 
 Question 11 
