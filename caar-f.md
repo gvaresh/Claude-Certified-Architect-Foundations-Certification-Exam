@@ -141,7 +141,7 @@ Question 11
 
 An engineer used Claude Code yesterday to investigate authentication flows in a legacy monolith, building up significant context over a 2-hour session. Today she wants to continue that specific investigation. She’s worked on three other codebases since then and knows the session isn’t the most recent “auth-deep-dive”. How should she resume? 
 
-A. Use --resume auth-deep-dive to load that specific session by name. 
+**A. Use --resume auth-deep-dive to load that specific session by name.** 
 
 B. Use --session-id with the UUID from yesterday’s session transcript file. 
 
@@ -155,7 +155,7 @@ Your agent needs to insert a new helper function into the middle of a 150-line u
 
 A. Use Edit’s replace_all parameter to target a common pattern and embed the new function in that replacement text. 
 
-B. Use Read to load the file, add the function at the appropriate location, then Write the updated file. 
+**B. Use Read to load the file, add the function at the appropriate location, then Write the updated file.** 
 
 C. Use Bash to append the function definition to the end of the file using redirect syntax. 
 
@@ -173,7 +173,7 @@ B. Resume the session without informing the agent about the changed files.
 
 C. Start a fresh session to ensure the agent works with the current codebase state without stale assumptions. 
 
-D. Resume the session and inform the agent which specific files changed for targeted re-analysis. 
+**D. Resume the session and inform the agent which specific files changed for targeted re-analysis.** 
 
 ⸻ 
 
@@ -185,7 +185,7 @@ A. Create a fixed testing schedule upfront based on directory structure, allocat
 
 B. Systematically read all 200 files to create a complete function inventory before writing any tests. 
 
-C. Use Glob and Grep to map codebase structure, identify heavily-coupled modules, create a prioritized plan for high-impact areas, and adapt as dependencies are discovered. 
+**C. Use Glob and Grep to map codebase structure, identify heavily-coupled modules, create a prioritized plan for high-impact areas, and adapt as dependencies are discovered.** 
 
 D. Start writing tests for the first module alphabetically, using test failures and imports to discover related files organically. 
 
@@ -201,7 +201,7 @@ An engineer submits two requests:
 
 For which request does specifying an explicit multi-phase workflow (such as analyze → propose → implement with verification) provide the most benefit? 
 
-A. Request B, the error-handling task. 
+**A. Request B, the error-handling task.** 
 
 B. Neither request benefits significantly. 
 
@@ -225,7 +225,7 @@ All three are currently written as instructions in your project’s CLAUDE.md. D
 
 A. Rewrite all three requirements in CLAUDE.md using stronger directive language and add examples. 
 
-B. Configure hooks for all three: a pre-tool-use hook blocking edits to migration files, a hook providing logging guidance, and a post-tool-use hook running Prettier after TypeScript edits. 
+**B. Configure hooks for all three: a pre-tool-use hook blocking edits to migration files, a hook providing logging guidance, and a post-tool-use hook running Prettier after TypeScript edits.** 
 
 C. Move all three requirements into .claude/rules as path-scoped rules. 
 
@@ -241,7 +241,7 @@ A. Add venue server to ~/.claude.json and playlist server to mcp.json.
 
 B. Add both servers to your local ~/.claude.json. 
 
-C. Add venue server to mcp.json and playlist server to ~/.claude.json. 
+**C. Add venue server to mcp.json and playlist server to ~/.claude.json.** 
 
 D. Add both servers to the project-level mcp.json file. 
 
@@ -251,7 +251,7 @@ Question 18
 
 Your team has connected a custom MCP server that provides DevOps workflow templates. The server exposes several MCP prompts, such as deploy_checklist and incident_response, in addition to tools. How do these MCP prompts become accessible within Claude Code? 
 
-A. They appear as slash commands (e.g., /mcp_servername_deploy_checklist) that you can invoke, with arguments passed after the command. 
+**A. They appear as slash commands (e.g., /mcp_servername_deploy_checklist) that you can invoke, with arguments passed after the command.** 
 
 B. They are automatically prepended to every conversation as additional system-level context. 
 
@@ -265,7 +265,7 @@ Question 19
 
 You need to add a date validation check ensuring event dates are in the future. This requires adding a conditional statement in one relatively small file. What is the most appropriate approach? 
 
-A. Use direct execution to make the change. 
+**A. Use direct execution to make the change.** 
 
 B. Enter plan mode to analyze how the validation might impact other parts of the reservation flow. 
 
@@ -281,7 +281,7 @@ You’re implementing a new payment processing module that must follow your proj
 
 A. Describe the patterns from the three modules in natural language in your prompt, explaining the transaction handling approach, error handling, and logging conventions Claude should follow. 
 
-B. Use @ references to include the three modules directly in your prompt, giving Claude concrete code examples to follow. 
+**B. Use @ references to include the three modules directly in your prompt, giving Claude concrete code examples to follow.** 
 
 C. Ask Claude to explore your codebase to find and understand the transaction, error handling, and logging patterns before generating a new module. 
 
@@ -293,7 +293,7 @@ You’ve asked Claude Code to build a PDF report generation feature. The initial
 
 A. Start fresh with a detailed prompt specifying all formatting requirements upfront. 
 
-B. Show Claude an example of a correctly formatted report and ask it to match the output while fixing the specific issues. 
+**B. Show Claude an example of a correctly formatted report and ask it to match the output while fixing the specific issues.** 
 
 C. Provide all three issues in a single detailed message with exact specifications for each. 
 
@@ -307,7 +307,7 @@ A critical bug is affecting production users. Error logs show exceptions in the 
 
 A. Use direct execution to examine the stack trace, read the relevant code, and implement a fix once you identify the root cause. 
 
-B. Use plan mode to analyze the error in context of the module’s design, enumerate potential root causes, and identify investigation steps before acting. 
+**B. Use plan mode to analyze the error in context of the module’s design, enumerate potential root causes, and identify investigation steps before acting.** 
 
 C. Enter plan mode to explore the module’s architecture and dependencies before attempting any fixes. 
 
@@ -323,7 +323,7 @@ A. Create path-specific rules in .claude/rules with YAML frontmatter scoping err
 
 B. Run /memory to check which memory files are loaded and verify your CLAUDE.md is included. 
 
-C. Search for conflicting instructions in .claude/CLAUDE.md or .claude/rules that might override your project conventions. 
+**C. Search for conflicting instructions in .claude/CLAUDE.md or .claude/rules that might override your project conventions.** 
 
 D. Add more detailed code examples to your CLAUDE.md showing the exact error message pattern for different response types. 
 
@@ -333,7 +333,7 @@ Question 24
 
 Your team frequently migrates React components to Vue. You’ve written a step-by-step workflow for Claude Code to follow during these migrations. You want every developer on the team to invoke it by typing /migrate-component. The workflow should stay in sync as the team refines it. Where should you place the skill file? 
 
-A. In .claude/skills/migrate-component/SKILL.md at the project root, committed to version control. 
+**A. In .claude/skills/migrate-component/SKILL.md at the project root, committed to version control.** 
 
 B. In the project’s .claude/settings.json using a skillOverride entry. 
 
@@ -351,7 +351,7 @@ A. Provide Claude with a detailed natural language specification of the algorith
 
 B. Have Claude extensively research the algorithm and create a detailed implementation plan, then implement based on that plan. 
 
-C. Write a test suite covering expected behaviors, edge cases, and performance requirements, run the tests, then iterate by sharing test failures with each refinement request. 
+**C. Write a test suite covering expected behaviors, edge cases, and performance requirements, run the tests, then iterate by sharing test failures with each refinement request.** 
 
 D. Provide Claude with a reference implementation from documentation, then ask it to rewrite the code to match your codebase’s patterns. 
 
@@ -365,7 +365,7 @@ A. Extract the formatting rules into a dedicated skill that Claude loads automat
 
 B. Split the formatting rules into path-scoped .claude/rules files that load when Claude works on formatting-related files. 
 
-C. Configure a PostToolUse hook with an Edit/Write matcher that automatically runs Prettier on each file Claude modifies. 
+**C. Configure a PostToolUse hook with an Edit/Write matcher that automatically runs Prettier on each file Claude modifies.** 
 
 D. Add a stronger prompt-based check that evaluates whether generated code follows formatting requirements before accepting it. 
 
@@ -381,7 +381,7 @@ B. Create a custom slash command encapsulating the migration transformations, th
 
 C. Update the dependency version, run the test suite, and use Claude Code to fix each failure as it appears. 
 
-D. Enter plan mode to explore library usage across modules, map affected code paths, then create a migration strategy before implementing changes. 
+**D. Enter plan mode to explore library usage across modules, map affected code paths, then create a migration strategy before implementing changes.**
 
 ⸻ 
 
@@ -397,7 +397,7 @@ Your monorepo contains shared coding standards in docs/standards/:
 
 Claude is applying all standards everywhere. What’s the most effective approach? 
 
-A. Create .claude/rules/ files for each standard with YAML frontmatter specifying the packages/files where each standard applies. 
+**A. Create .claude/rules/ files for each standard with YAML frontmatter specifying the packages/files where each standard applies.**
 
 B. Use @imports in each package’s CLAUDE.md to reference only the standards relevant to that package. 
 
@@ -411,7 +411,7 @@ Question 29
 
 You’ve asked Claude to write a data migration script, but the initial output doesn’t correctly handle records with null values. What’s the most effective way to iterate toward a working solution? 
 
-A. Provide a test case with example input containing null values and the expected output, then ask Claude to fix it. 
+**A. Provide a test case with example input containing null values and the expected output, then ask Claude to fix it.** 
 
 B. Describe the null value problem in detail and ask Claude to regenerate the entire script. 
 
@@ -427,7 +427,7 @@ Your team wants Claude to follow a detailed code review checklist (8 items cover
 
 A. Configure plan mode as the default for code review sessions. 
 
-B. Create a dedicated review subagent with the checklist embedded in its configuration. 
+**B. Create a dedicated review subagent with the checklist embedded in its configuration.**
 
 C. Add the checklist to the project’s CLAUDE.md file under a “Code Review” section. 
 
@@ -441,7 +441,7 @@ A. Issue the 200 Messages API requests in parallel using concurrent connections.
 
 B. Switch the summarization calls from the Sonnet-tier model to a Haiku-tier model. 
 
-C. Submit the 200 requests to the Message Batches API with unique custom IDs and retrieve results later. 
+**C. Submit the 200 requests to the Message Batches API with unique custom IDs and retrieve results later.** 
 
 D. Concatenate all 200 commit messages into a single Messages API request. 
 
@@ -453,7 +453,7 @@ Your automated review CI jobs take 18 seconds to initialize before Claude begins
 
 A. Keep the default initialization and add --exclude-dynamic-system-prompt-sections. 
 
-B. Run with --bare mode and pass --append-system-prompt-file CLAUDE.md. 
+**B. Run with --bare mode and pass --append-system-prompt-file CLAUDE.md.** 
 
 C. Replace the default prompt entirely using --system-prompt-file. 
 
@@ -471,7 +471,7 @@ B. Remove conservative filtering instructions and report all potential issues.
 
 C. Expand the context window with related files and dependency information. 
 
-D. Split the review into a findings stage and a separate thresholding stage. 
+**D. Split the review into a findings stage and a separate thresholding stage.** 
 
 ⸻ 
 
@@ -483,7 +483,7 @@ A. Build post-processing keyword filters.
 
 B. Add inline suppress comments and preprocess diffs. 
 
-C. Document accepted patterns and conventions in the project’s CLAUDE.md. 
+**C. Document accepted patterns and conventions in the project’s CLAUDE.md.** 
 
 D. Analyze only changed lines without surrounding context. 
 
@@ -501,7 +501,7 @@ You built an LLM-powered code review tool that analyzes pull requests and output
 
 Developers can dismiss findings. About 35% of findings get dismissed. You want to analyze these dismissals to understand what your system is getting wrong and improve the prompts accordingly. What change to your output structure would best support this analysis? 
 
-A. Add a detected_pattern field recording the code construct that triggered each finding. 
+**A. Add a detected_pattern field recording the code construct that triggered each finding.** 
 
 B. Add a model_confidence field (0.0–1.0). 
 
@@ -521,7 +521,7 @@ B. Add instructions to “be conservative”.
 
 C. Implement post-processing keyword matching. 
 
-D. Include few-shot examples showing acceptable and problematic patterns. 
+**D. Include few-shot examples showing acceptable and problematic patterns.** 
 
 ⸻ 
 
@@ -533,7 +533,7 @@ A. Implement a two-phase generation with a second Claude call scoring tests.
 
 B. Restrict test generation to selected directories. 
 
-C. Document testing standards in CLAUDE.md, including examples of meaningful tests. 
+**C. Document testing standards in CLAUDE.md, including examples of meaningful tests.**
 
 D. Add post-generation coverage analysis. 
 
@@ -561,7 +561,7 @@ claude -p \
 
 The reviews complete and return feedback, but Claude only comments on the piped diff itself—it never reads surrounding files in the repository to understand broader context. You want Claude to read related files while still applying your custom review instructions. 
 
-A. Keep --system-prompt and add --allowedTools "Read,Grep". 
+**A. Keep --system-prompt and add --allowedTools "Read,Grep".** 
 
 B. Stop piping the diff via stdin and embed it in the prompt. 
 
@@ -575,7 +575,7 @@ Question 39
 
 Your CI pipeline performs security-focused code reviews on approximately 50 PRs daily. Reviews are non-blocking—developers merge after tests pass and address findings in follow-up commits. You are evaluating the Message Batches API for cost reduction. What factor most determines whether batch processing is appropriate for this use case? 
 
-A. Whether review feedback arriving up to 24 hours after PR creation remains actionable. 
+**A. Whether review feedback arriving up to 24 hours after PR creation remains actionable.** 
 
 B. Whether your result processing can handle reviews arriving in a different order than submitted. 
 
@@ -593,7 +593,7 @@ Options:
 
 A. The extended session length caused the context window to fill with conversation history, leaving less room for thorough analysis. 
 
-B. Claude retains context about its prior reasoning in the session, making it less likely to question its own decisions. 
+**B. Claude retains context about its prior reasoning in the session, making it less likely to question its own decisions.** 
 
 C. The CI environment has access to the full codebase context while the local session only sees the current file. 
 
@@ -609,7 +609,7 @@ The automated review pipeline generates an average of 18 findings per PR. Develo
 
 Options: 
 
-A. Create a REVIEW.md at the repository root with skip rules for CI-enforced checks and generated files, and require findings to cite specific evidence of incorrect behavior. 
+**A. Create a REVIEW.md at the repository root with skip rules for CI-enforced checks and generated files, and require findings to cite specific evidence of incorrect behavior.**
 
 B. Add a prompt parameter to the GitHub Action configuration instructing it to suppress findings matching common anti-pattern patterns and apply stricter evidence requirements. 
 
@@ -631,7 +631,7 @@ A. Provide the full repository as context instead of just changed files and surr
 
 B. Replace the few-shot examples with a detailed checklist for specific logic edge cases. 
 
-C. Split the review into separate focused prompts (e.g., security, API design, business logic) and consolidate findings before posting. 
+**C. Split the review into separate focused prompts (e.g., security, API design, business logic) and consolidate findings before posting.** 
 
 D. Upgrade to a more capable model. 
 
@@ -645,7 +645,7 @@ During initial testing of the automated review pipeline, you notice that reviews
 
 Options: 
 
-A. Add --max-turns 10 --max-budget-usd 2.00 to the Claude invocation. 
+**A. Add --max-turns 10 --max-budget-usd 2.00 to the Claude invocation.**
 
 B. Set --permission-mode dontAsk to auto-deny tool permission requests not in the allowed set. 
 
@@ -669,7 +669,7 @@ B. Move the cache_control breakpoints from the system prompt to the individual m
 
 C. Add pre-warming requests with max_tokens: 0 at the beginning of each batch. 
 
-D. Use the extended 1-hour cache TTL instead of the default 5-minute TTL. 
+**D. Use the extended 1-hour cache TTL instead of the default 5-minute TTL.** 
 
 ⸻ 
 
@@ -681,7 +681,7 @@ Your code review prompts include both implementation changes and the correspondi
 
 Options: 
 
-A. Include few-shot examples showing code with an uncovered branch paired with review comments identifying the specific missing test. 
+**A. Include few-shot examples showing code with an uncovered branch paired with review comments identifying the specific missing test.** 
 
 B. Implement a multi-pass pipeline where separate LLM calls first extract all conditional branches, then a second pass checks coverage. 
 
@@ -699,7 +699,7 @@ Production reviews reveal inconsistent handling of uncertainty in final reports.
 
 Options: 
 
-A. Instruct the synthesis agent to structure reports with explicit sections distinguishing well-established findings from uncertain findings, including source characterization and methodological context. 
+**A. Instruct the synthesis agent to structure reports with explicit sections distinguishing well-established findings from uncertain findings, including source characterization and methodological context.** 
 
 B. Add a verification subagent that cross-references findings across sources and synthesizes only independent sources. 
 
@@ -719,7 +719,7 @@ Options:
 
 A. Implement pattern-based routing that categorizes queries into predefined subagent combinations. 
 
-B. Have the coordinator analyze each query and dynamically decide which subagents to invoke based on its assessment. 
+**B. Have the coordinator analyze each query and dynamically decide which subagents to invoke based on its assessment.** 
 
 C. Create a fast-path for factual questions that bypasses subagents entirely. 
 
@@ -737,7 +737,7 @@ Options:
 
 A. The coordinator’s max_tokens setting is too low, causing task tool invocations to be truncated before execution. 
 
-B. The AgentDefinitions are configured correctly, but the coordinator’s system prompt does not explicitly list the available subagents or explain that they can be invoked. 
+**B. The AgentDefinitions are configured correctly, but the coordinator’s system prompt does not explicitly list the available subagents or explain that they can be invoked.**
 
 C. Subagent context isolation prevents task descriptions from being forwarded through ClaudeAgentOptions. 
 
@@ -755,7 +755,7 @@ A. Both agents access a shared memory store where the web search agent writes fi
 
 B. The web search agent directly invokes the document analysis agent, passing the discovered sources as parameters. 
 
-C. The coordinator agent receives the web search agent’s output and includes relevant findings in the prompt when invoking the document analysis agent. 
+**C. The coordinator agent receives the web search agent’s output and includes relevant findings in the prompt when invoking the document analysis agent.** 
 
 D. The agents communicate through an event-driven message queue, with the document analysis agent subscribing to source-discovery events. 
 
@@ -773,7 +773,7 @@ A. Have each agent maintain its own persistent state file and reload it independ
 
 B. Have each agent persist a structured export to a known location. On resume, the coordinator loads the intermediate outputs and reconstructs prompts. 
 
-C. Index all agent outputs in a shared vector store. When resuming, each agent queries the store using semantic search to recover context. 
+**C. Index all agent outputs in a shared vector store. When resuming, each agent queries the store using semantic search to recover context.** 
 
 D. Persist the coordinator’s conversation log containing all task delegations and responses. 
 
@@ -789,7 +789,7 @@ Options:
 
 A. Require all subagents to output structured claim–source mappings, preserving attribution across multiple sources. 
 
-B. Have the coordinator inject source identifier prefixes into text before each handoff, then parse them back out during report generation. 
+**B. Have the coordinator inject source identifier prefixes into text before each handoff, then parse them back out during report generation.** 
 
 C. Maintain complete transcripts of all subagent interactions and add a citation-resolution agent before report generation. 
 
@@ -805,7 +805,7 @@ When researching “renewable energy adoption,” the web search agent returns r
 
 Options: 
 
-A. Instruct the synthesis agent to always treat the most recent data as authoritative and place older findings in a separate historical appendix. 
+**A. Instruct the synthesis agent to always treat the most recent data as authoritative and place older findings in a separate historical appendix.** 
 
 B. Configure the web search agent to only return results from the past 6 months. 
 
@@ -825,7 +825,7 @@ Options:
 
 A. Skip summarization and pass full raw outputs from web search and document analysis directly to the report generator. 
 
-B. Have each agent output structured data separating content summaries from source metadata and provenance. 
+**B. Have each agent output structured data separating content summaries from source metadata and provenance.** 
 
 C. Have the report generator query the web search agent for source URLs whenever citations are needed. 
 
@@ -841,7 +841,7 @@ The synthesis agent completes its initial pass but flags that three key research
 
 Options: 
 
-A. Have the coordinator evaluate synthesis output for gaps, then re-delegate to web search and document analysis before running synthesis again. 
+**A. Have the coordinator evaluate synthesis output for gaps, then re-delegate to web search and document analysis before running synthesis again.**
 
 B. Increase the initial breadth of queries sent to web search and document analysis to reduce the probability of missed topics. 
 
@@ -861,7 +861,7 @@ Options:
 
 A. Add a format-conversion layer between subagents and synthesis that transforms all outputs to a common markdown structure. 
 
-B. Standardize all subagent outputs to JSON with fields for title, summary, score, and citation. 
+**B. Standardize all subagent outputs to JSON with fields for title, summary, score, and citation.** 
 
 C. Update the synthesis agent to render each content type appropriately rather than forcing all outputs into a single summary format. 
 
@@ -883,7 +883,7 @@ B. Provide the subagent with tool definitions that allow it to request outputs f
 
 C. Pass reference identifiers and configure the subagent with read access to a shared memory store where other subagents wrote results. 
 
-D. Include the complete findings from both subagents directly in the synthesis subagent prompt. 
+**D. Include the complete findings from both subagents directly in the synthesis subagent prompt.** 
 
 ⸻ 
 
@@ -895,7 +895,7 @@ Production monitoring shows the research phase takes longer than expected. Analy
 
 Options: 
 
-A. Create an async orchestration layer, outside the agent, that spawns parallel threads for independent subagents and waits for both results. 
+**A. Create an async orchestration layer, outside the agent, that spawns parallel threads for independent subagents and waits for both results.**
 
 B. Structure the coordinator to emit both Task tool calls for web search and document analysis in a single conversation turn. 
 
@@ -913,7 +913,7 @@ You’ve configured the system so that all four subagents have access to the com
 
 Options: 
 
-A. Choosing from 18 tools instead of 4–5 relevant ones increases decision complexity beyond useful specialization benefits. 
+**A. Choosing from 18 tools instead of 4–5 relevant ones increases decision complexity beyond useful specialization benefits.** 
 
 B. The tool definitions consume too much context-window space, leaving insufficient room for task execution. 
 
@@ -935,7 +935,7 @@ B. Implement a message queue where precedent analysis tasks are processed asynch
 
 C. Enable the document analysis subagent to spawn its own specialized subagents dynamically for each precedent. 
 
-D. Have the coordinator spawn parallel document analysis subagents, each focused on a subset of precedents. 
+**D. Have the coordinator spawn parallel document analysis subagents, each focused on a subset of precedents.** 
 
 Question 60 
 
@@ -947,7 +947,7 @@ Options:
 
 A. Pass only the synthesis draft and have a separate post-processing pipeline match claims to sources and insert citations. 
 
-B. Pass the synthesis draft along with a structured source index that maps key claims to their source URLs and relevant excerpts. 
+**B. Pass the synthesis draft along with a structured source index that maps key claims to their source URLs and relevant excerpts.** 
 
 C. Pass a condensed summary of all prior stages that preserves the main findings and attributes them to source URLs. 
 
